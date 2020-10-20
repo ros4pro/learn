@@ -1,0 +1,27 @@
+{
+    "title": "ROS4PRO",
+    "structure": {
+        "readme": "README.md",
+        "summary": "SUMMARY.md"
+    },
+    "plugins": [
+        "anchorjs",
+        "build",
+        "custom-favicon",
+        "github",
+        "language-picker"
+    ],
+    "pluginsConfig": {
+        "favicon": "img/favicon.png",
+        "github": {
+            "url": "https://github.com/ros4pro/learn/"
+        },
+        "edit-link": {
+            "base": "https://github.com/ros4pro/learn/",
+            "label": {
+                "en": "Edit this page",
+                "fr": "Editez cette page"
+            }
+        }
+    }
+}
