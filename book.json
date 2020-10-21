@@ -9,7 +9,8 @@
         "build",
         "custom-favicon",
         "github",
-        "language-picker"
+        "language-picker",
+        "localized-footer"
     ],
     "pluginsConfig": {
         "favicon": "img/favicon.png",
