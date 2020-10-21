@@ -13,7 +13,7 @@
 
 ⚠️ **Attention** : vous ne pourrez faire aucune erreur de câblage sauf avec le câble d'alimentation de la Raspberry Pi qui doit impérativement être branché comme sur le schéma ci-dessous **au risque de déteriorer définitivement le matériel**.
 
-![Attention au câble d'alimentation](../img/tb3_power_cable.png)
+![Attention au câble d'alimentation](../../img/tb3_power_cable.png)
 
 ▶️ Suivez cette vidéo pour assembler votre Turtlebot Burger :
 
