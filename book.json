@@ -8,21 +8,11 @@
         "anchorjs",
         "build",
         "custom-favicon",
-        "github",
         "language-picker",
-        "localized-footer"
+        "localized-footer",
+        "embed-pdf"
     ],
     "pluginsConfig": {
-        "favicon": "img/favicon.png",
-        "github": {
-            "url": "https://github.com/ros4pro/learn/"
-        },
-        "edit-link": {
-            "base": "https://github.com/ros4pro/learn/",
-            "label": {
-                "en": "Edit this page",
-                "fr": "Editez cette page"
-            }
-        }
+        "favicon": "img/favicon.ico"
     }
 }

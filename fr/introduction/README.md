@@ -27,7 +27,7 @@ Vous aurez besoin des commandes suivantes :h
 * [Understanding ROS Services and Parameters](http://wiki.ros.org/ROS/Tutorials/UnderstandingServicesParams) : Déclarer et appeler un service requête/réponse (`rosservice`, `rossrv`)
 
 
-❓ **Quizz** : quizz au tableau pour mémoriser les commandes importantes
+❓ [**Quizz** : quizz au tableau pour mémoriser les commandes importantes](quizz.pdf)
 
 ## 4. ⚙️ Préparer vos robots
 
@@ -52,3 +52,7 @@ Veuillez valider ou remiser vos modifications avant la fusion.
 Abandon
 ```
 Alors les fichiers spécifiés ne peuvent pas être mis à jour car cela détruirait les modifications que vous avez apportées à la liste des fichiers indiquée. Il est recommandé de demander conseil avant d'essayer une autre action pour récupérer la mise à jour.
+
+## Diapositives
+
+{% pdf src="slides.pdf", width="100%", height="450px" %}{% endpdf %}

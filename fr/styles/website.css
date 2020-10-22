@@ -1,3 +1,4 @@
+/* Night theme override */
 .book.color-theme-2 .book-body .body-inner .book-header {
     background-color: #a62639;
     color: white;
@@ -9,4 +10,9 @@
 
 .book.color-theme-2 .fa:hover {
   color: darkgrey;
+}
+
+/* PDF plugin */
+.pdf__link > a {
+  display: none;
 }
