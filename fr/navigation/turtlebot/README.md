@@ -19,14 +19,35 @@
 
 [![Vidéo d'assemblage](https://img.youtube.com/vi/rvm-m2ogrLA/0.jpg)](https://www.youtube.com/watch?v=rvm-m2ogrLA)
 
-
-### 2.2. Bringup du TB3 
+### 2.2. Bringup du TB3 (sur un robot réel)
 🔍 Vérifiez d'abord la configuration réseau de ROS sur votre PC et sur le TB3 : *ROS_MASTER_URI* doit pointer vers le Turtlebot. Vérifiez également que vous avez connecté le robot au Wifi et renommé votre robot en y ajoutant votre numéro de groupe (par ex `burger8`) avec les [instructions](1_INTRODUCTION.md#4-faq-robots) de l'introduction.
 
 💻 Lancez `roscore` dans un premier terminal. 
 
 🤖 Sur le TB3 lancer la commande `roslaunch turtlebot3_bringup turtlebot3_robot.launch`.
 S'il n'y a aucune erreur vous êtes prêt à piloter le robot depuis votre poste de travail, que ce soit pour la téléopération, la cartographie ou la navigation autonome.
+
+### 2.2.bis. Bringup du Turtlebot (en simulation)
+
+⚠️ **Attention** la simulation du TB3 n'est a utiliser qu'en dernier recours pour remplacer votre robot s'il ne fonctionne pas. Avant de passer en simulation demandez de l'aide pour réparer votre robot.
+
+📥 Vous devez télécharger et installer le paquet ROS de simulation du TB3 :
+* 💻 Lancez `cd ~/catkin_ws/src` dans un terminal pour vous déplacer dans le dossier contenant les sources de vos paquets ROS.
+* 💻 Lancez `git clone https://github.com/ros4pro/turtlebot3_simulations.git` dans le même terminal, le dossier `turtlebot3_simulations` est créé dans le répertoire `~/catkin_ws/src`.
+* 💻 Lancez `cd ..; catkin_make`, le nouveau paquet est installé. Après la compilation lancez `source ~/.bashrc` dans chaque terminal pour les mettre à jour ou fermez les tous.
+
+🔍 La simulation remplace le robot donc vous ne devez ni essayer de lancer le bringup du TB3 et ni vous connecter au robot. À la place vous devez lancer le simulateur et configurer *ROS_MASTER_URI* pour pointer vers votre PC (*ROS master = cette machine*).
+
+💻 Lancez `roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch`, le simulateur Gazebo se lance et vous devez voir le TB3 au milieu de la fenêtre.
+
+Plusieurs environnements de simulation sont disponibles :
+* `turtlebot3_empty_world.launch` : un monde vide, ne contenant que le TB3 et un sol.
+* `turtlebot3_house.launch` : une maison avec plusieurs pièces et du mobilier.
+* `turtlebot3_world.launch` : le TB3 est au milieu d'un carré.
+* `turtlebot3_stage_1.launch` : le TB3 est dans une arène carrée.
+* `turtlebot3_stage_2.launch` : le TB3 est dans une arène carré avec 4 obstacles fixes.
+* `turtlebot3_stage_3.launch` : le TB3 est dans une arène carré avec 4 obstacles fixes.
+* `turtlebot3_stage_4.launch` : le TB3 est dans une grande arène carrée avec plusieurs obstacles et des murs.
 
 ### 2.3. Téléopération
 🎮 La première étape consiste à vérifier que votre poste de travail peut effectivement prendre le contrôle du Turtlebot, en le téléopérant via les touches du clavier.
