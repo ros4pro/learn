@@ -1,18 +1,20 @@
-# Table of content
+# Sommaire
 
 * [Qu'est-ce que c'est ?](README.md)
-* [Introduction à Linux et ROS](introduction/README.md)
-* Navigation
+* [I. Introduction à Linux et ROS](introduction/README.md)
+* II. Navigation
     * [Turtlebot](navigation/turtlebot/README.md)
-* Manipulation
+* III. Manipulation
     * [Poppy Ergo Jr](manipulation/ergo-jr/README.md)
     * [Sawyer](manipulation/sawyer/README.md)
     * [Universal Robot](manipulation/ur/README.md)
-* Perception
+* IV. Perception
   * [Keras](perception/keras/README.md)
   * [Torch](perception/pytorch/README.md)
-* Intégration
+* V. Intégration
   * [Poppy Ergo Jr + Turtlebot + Keras](integration/ergo-tb-keras/README.md)
+  * [Sawyer + Turtlebot + Keras](integration/sawyer-tb-keras/README.md)
+* [VI. Robotique théorique](theory/README.md)
 * Foires aux Questions
-  * [FAQ robots basés sur Raspberry Pi](faq/pi//README.md)
+  * [FAQ robots basés sur Raspberry Pi](faq/pi/README.md)
 

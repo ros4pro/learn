@@ -1,4 +1,13 @@
-# ROS4PRO : Journée d'Introduction
+# I. Introduction à Linux, ROS et ROS-I
+## Prérequis
+
+* Lycée et +
+* Notions de programmes informatiques, terminaux et commandes
+
+## Diapositives
+
+{% pdf src="https://files.ros4.pro/introduction.pdf", width="100%", height="450px" %}{% endpdf %}
+
 ## 1. Démarrer Ubuntu et ROS
 
 Selon votre situation, une clé USB bootable peut vous être fournie. Dans ce cas, vous devez faire "booter" votre poste de travail sur la clé USB Live fournie.

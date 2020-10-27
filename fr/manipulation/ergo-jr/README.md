@@ -1,16 +1,21 @@
-# ROS4PRO : Journée Manipulation
+# III. Robotique de manipulation avec Poppy Ergo Jr
 
-## 1. Documentation
-### 1.1. Les liens
-* [Tutoriaux de MoveIt](https://ros-planning.github.io/moveit_tutorials/)
-* [Code du MoveIt Commander Python](https://github.com/ros-planning/moveit/tree/master/moveit_commander/src/moveit_commander)
-* [Documentation de l’API MoveIt en Python](http://docs.ros.org/melodic/api/moveit_python/html/namespacemoveit__python.html)
-* [Tutoriaux du SDK Sawyer](https://sdk.rethinkrobotics.com/intera/Tutorials)
+La robotique de manipulation regroupe la manipulation d'objets avec des robots : des bras articulés à 5 ou 6 axes, les robots [SCARA](https://en.wikipedia.org/wiki/SCARA) (Selective Compliance Assembly Robot Arm), les robots [cartésiens](https://en.wikipedia.org/wiki/Cartesian_coordinate_robot) (linéaires), les robots [parallèles](https://en.wikipedia.org/wiki/Parallel_manipulator) ... Dans ce TP nous utilisons un robot Sawyer du fabriquant Rethink Robotics.
 
-## 1.2. Préparer la carte SD
+## Prérequis
+
+* Lycée et +
+* Notions de Python
+
+## Diapositives
+
+{% pdf src="https://files.ros4.pro/manipulation.pdf", width="100%", height="450px" %}{% endpdf %}
+
+## 1. Préparer le matériel (avec un robot réel)
+### 1.1. Préparer la carte SD
 📥 Pour éviter tout problème lié à une précédente utilisation du robot, commencez par flasher la carte SD fournie avec l'image ROS en utilisant [la procédure vue lors de l'introduction](https://github.com/ros4pro/ros4pro/blob/poppy_tb3_keras/tp/1_INTRODUCTION.md#1-images-des-cartes-sd). Pendant cette étape, assemblez votre robot en parrallèle. 
 
-## 1.3. Assembler Poppy Ergo Jr
+### 1.2. Assembler Poppy Ergo Jr
 🔧 Pour assembler votre robot, veuillez suivre [le guide d'assemblage](https://docs.poppy-project.org/fr/assembly-guides/ergo-jr/), en suivant les étapes faîtes pour ROS le cas échéant ; et en comparant minutieusement chaque pièce aux photos pour vérifier leur orientation car il est très facile d'assembler ce robot à l'envers même s'il a au final la même allure. Si votre robot est pré-assemblé, recommencez à minima toutes les configurations des moteurs qui pourraient être incorrectes.
 
 ✅ **Vérification :** Pour vérifier que votre assemblage est correct, connectez-vous en SSH au robot (si ce n'est pas déjà fait) puis exécutez :
@@ -75,11 +80,11 @@ source ~/.bashrc    # Pour charger votre .bashrc et donc le nouveau master
 ##### 2.1.2.b. Services du robot
 ✍ Avec les utilitaires `rosservice` et `rossrv`, listez les services disponibles puis consultez celui qui met le robot en mode **compliant**. En particulier :
 
-* Quel est son nom ?
-* Quel est le type de service qu'il transmet ?
-* Quels sont les champs de la requête de ce service ?
-* Quels sont les champs de la réponse de ce service ?
-* Appelez ce service pour activer et désactiver le mode compliant et essayer de faire bouger votre robot à la main à chaque fois. Que déduisez-vous de la signification du **mode compliant** ? *Conseil :* aidez-vous de l'autocomplétion avec la touche <TAB>
+* Quel est le nom de topic du service mettant le robot en compliant ?
+* Quel est le type de ce service ?
+* Consultez le détail des champs. Quels sont les champs de la **requête** de ce service ?
+* Consultez le détail des champs. Quels sont les champs de la **réponse** de ce service ?
+* Appelez ce service pour activer et désactiver le mode compliant et essayez de faire bouger votre robot à la main à chaque fois. Que déduisez-vous de la signification du **mode compliant** ? *Conseil :* aidez-vous de l'autocomplétion avec la touche <TAB>
 
 ##### 2.1.2.c. Tracer la courbe des positions des moteurs en temps réel
 Mettez votre robot en mode compliant, démarrez `rqt_plot` pour tracer les positions des 6 moteurs ... bougez les moteurs à la main et vérifiez que `rqt_plot` actualise la courbe en temps réel.
@@ -115,7 +120,8 @@ Note : si vous devez passer en simulation à ce moment suite à un défaut maté
 💻✍ Testez également le groupe `arm` en plus du premier `arm_and_finger` et lancez des planifications de mouvement pour tester :
 
 * Quelle est la différence entre ces 2 groupes ?
-* Quel est le groupe pour lequel le goal est le plus facilement manipulable et pourquoi ?
+* Quel est le groupe pour lequel le goal est le plus facilement manipulable ?
+* Pourquoi ce groupe est-il plus facilement manipulable que l'autre ?
 * Déduisez-en ce que désigne exactement un `planning group`
 
 #### 2.2.4. Transformations `tf`
@@ -125,7 +131,7 @@ Nous allons visualiser et interroger l'arbre des transformations nommé `tf`
 
 * Comment est nommé le repère de base ?
 * Comment sont nommés les deux effecteurs finaux possibles ?
-* Avec `rosrun tf tf_echo`, déterminez quelle est la position actuel d'un effecteur dans le repère de base. Ses coordonnées peuvent vous servir pour les définir comme cible à atteindre par la suite.
+* Avec `rosrun tf tf_echo`, déterminez quelle est la position actuelle d'un effecteur dans le repère de base. Ses coordonnées peuvent vous servir pour les définir comme cible à atteindre par la suite.
 
 ### 2.3. Ecrire un noeud Python ROS pour l'Ergo Jr
 #### 2.3.1. Créer un nouveau package et un nouveau noeud Python
@@ -259,4 +265,10 @@ Cette image peut ensuite être traitée par un réseau de neurones, une fonction
 ## 3. A rendre
 
 * Réponses aux questions ci-dessus dans un fichier README (réponses communes au groupe mais répondez-ici ensemble pour vous assurer que tout le monde a compris)
-* Code de votre pacakge `ros4pro_custom` à rendre
+* Code de votre package `ros4pro_custom` à rendre
+
+## Documentation
+* [Tutoriaux de MoveIt](https://ros-planning.github.io/moveit_tutorials/)
+* [Code du MoveIt Commander Python](https://github.com/ros-planning/moveit/tree/master/moveit_commander/src/moveit_commander)
+* [Documentation de l’API MoveIt en Python](http://docs.ros.org/melodic/api/moveit_python/html/namespacemoveit__python.html)
+* [Documentation de Poppy Ergo Jr](https://docs.poppy-project.org/fr/assembly-guides/ergo-jr/)

@@ -16,3 +16,8 @@
 .pdf__link > a {
   display: none;
 }
+
+/* Other */
+.book-summary ul.summary li .gitbook-link {
+  display: none;
+}

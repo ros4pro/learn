@@ -1,13 +1,20 @@
-# ROS4PRO : Journée Intégration
+# V. Intégration Poppy Ergo Jr + Turtlebot + Keras
 
-## 0. Objectif
-
-La journée d'intégration consiste à intégrer dans une même cellule robotique les 3 briques logicielles travaillées les autres jours, à savoir :
+L'intégration consiste à intégrer dans une même cellule robotique les 3 briques logicielles travaillées les autres jours, à savoir :
 * La manipulation par le bras robotique
 * La navigation avec le robot roulant
 * La vision avec le réseau de neurones
 
-Le scenario de l'intégration est un système de tri robotisé de pièces dans un bac 1 ou un bac 2 selon leur marquage.
+Le scenario de l'intégration est un système de tri robotisé de pièces dans un bac 1 ou un bac 2 selon leur marquage au feutre.
+
+## Prérequis
+
+* Avoir suivi les TP *Introduction*, *Manipulation*, *Navigation*, et *Perception* 
+* Avoir réalisé une ébauche de nœud Python pour chacun des TP *Manipulation*, *Navigation*, et *Perception*
+
+## Diapositives
+
+{% pdf src="https://files.ros4.pro/integration.pdf", width="100%", height="450px" %}{% endpdf %}
 
 ## 1. Actions séquentielles de la cellule robotique
 

@@ -5,6 +5,7 @@
         "summary": "SUMMARY.md"
     },
     "plugins": [
+        "github",
         "anchorjs",
         "build",
         "custom-favicon",
@@ -13,6 +14,9 @@
         "embed-pdf"
     ],
     "pluginsConfig": {
-        "favicon": "img/favicon.ico"
+        "favicon": "img/favicon.ico",
+        "github": {
+            "url": "https://github.com/ros4pro/"
+        }
     }
 }
