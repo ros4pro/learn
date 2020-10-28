@@ -12,8 +12,7 @@
   color: darkgrey;
 }
 
-.page-inner {
-  position: relative;
+.page-wrapper .page-inner {
   max-width: 1000px;
 }
 
