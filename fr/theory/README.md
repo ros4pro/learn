@@ -9,7 +9,7 @@ Ce cours et TP aborde les notions de base des concepts théoriques sous-jacents 
 
 ## Diapositives
 
-{% pdf src="https://files.ros4.pro/theorie.pdf", width="100%", height="450px" %}{% endpdf %}
+{% pdf src="https://files.ros4.pro/theorie.pdf", width="100%", height="565px" %}{% endpdf %}
 
 ## Travaux pratiques 
 ### Modèle géométrique direct

@@ -9,7 +9,7 @@ Keras est un système d'apprentissage automatique utilisant des réseaux de neur
 
 ## Diapositives
 
-{% pdf src="https://files.ros4.pro/perception.pdf", width="100%", height="450px" %}{% endpdf %}
+{% pdf src="https://files.ros4.pro/perception.pdf", width="100%", height="565px" %}{% endpdf %}
 
 
 ## 0. Installation
@@ -19,6 +19,7 @@ Le code source se trouve à [cet emplacement](https://gitlab.inria.fr/apere/ros_
 Pour effectuer cet atelier, vous devez installer quelques packages:
 ```
 pip install tensorflow keras imageio matplotlib scikit-image numpy
+git clone https://gitlab.inria.fr/apere/ros_workshop.git
 ```
 
 ## 1. Documentation

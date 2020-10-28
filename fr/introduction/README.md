@@ -6,7 +6,7 @@
 
 ## Diapositives
 
-{% pdf src="https://files.ros4.pro/introduction.pdf", width="100%", height="450px" %}{% endpdf %}
+{% pdf src="https://files.ros4.pro/introduction.pdf", width="100%", height="565px" %}{% endpdf %}
 
 ## 1. Démarrer Ubuntu et ROS
 
@@ -64,4 +64,4 @@ Alors les fichiers spécifiés ne peuvent pas être mis à jour car cela détrui
 
 ## Diapositives
 
-{% pdf src="slides.pdf", width="100%", height="450px" %}{% endpdf %}
+{% pdf src="slides.pdf", width="100%", height="565px" %}{% endpdf %}

@@ -9,7 +9,7 @@ La robotique de manipulation regroupe la manipulation d'objets avec des robots :
 
 ## Diapositives
 
-{% pdf src="https://files.ros4.pro/manipulation.pdf", width="100%", height="450px" %}{% endpdf %}
+{% pdf src="https://files.ros4.pro/manipulation.pdf", width="100%", height="565px" %}{% endpdf %}
 
 ## 1. Préparer le matériel (avec un robot réel)
 ### 1.1. Préparer la carte SD
@@ -53,6 +53,8 @@ Ouvrez le PDF obtenu puis déterminez :
 * Que représentent les rectangles ?
 * Que représentent les bulles ?
 * Que représentent les flèches et surtout les valeurs `xyz` et `rpy` associées ?
+
+![URDF de Poppy Ergo Jr](https://raw.githubusercontent.com/poppy-project/poppy_ergo_jr_description/master/doc/img/rviz.png)
 
 #### 2.1.2. Comprendre les E/S du contrôleur
 
@@ -104,6 +106,8 @@ roslaunch poppy_ergo_jr_moveit_config demo.launch fake_execution:=false gripper:
 Rviz doit démarrer avec un Poppy Ergo Jr en visu.
 
 Note : si vous devez passer en simulation à ce moment suite à un défaut matériel, pensez à changer votre `ROS_MASTER_URI` pour `localhost` puis mettre simplement `fake_execution` à `true`.
+
+![MoveIt avec Poppy Ergo Jr](https://raw.githubusercontent.com/poppy-project/poppy_ergo_jr_moveit_config/36ffb295cf115a080b81aa6475ae512e88c9957a/doc/img/MoveIt.gif)
 
 #### 2.2.2. Planification
 

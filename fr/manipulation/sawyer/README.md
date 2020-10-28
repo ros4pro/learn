@@ -9,7 +9,7 @@ La robotique de manipulation regroupe la manipulation d'objets avec des robots :
 
 ## Diapositives
 
-{% pdf src="https://files.ros4.pro/manipulation.pdf", width="100%", height="450px" %}{% endpdf %}
+{% pdf src="https://files.ros4.pro/manipulation.pdf", width="100%", height="565px" %}{% endpdf %}
 
 ## 1. Documentation
 ### 1.1. Les liens

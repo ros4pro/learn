@@ -7,7 +7,7 @@
 
 ## Diapositives
 
-{% pdf src="https://gitlab.com/catie_robotics/workshop_athome_edu/workshop_at_home_edu/-/raw/master/Workshop%20Robocup@Home%20Navigation%20DAY3%20janvier_2019.pdf", width="100%", height="450px" %}{% endpdf %}
+{% pdf src="https://files.ros4.pro/navigation.pdf", width="100%", height="565px" %}{% endpdf %}
 
 ##  Travaux pratiques
 ### 1. Assemblage du Turtlebot (avec un robot réel)

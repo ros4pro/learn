@@ -14,7 +14,7 @@ Le scenario de l'intégration est un système de tri robotisé de pièces dans u
 
 ## Diapositives
 
-{% pdf src="https://files.ros4.pro/integration.pdf", width="100%", height="450px" %}{% endpdf %}
+{% pdf src="https://files.ros4.pro/integration.pdf", width="100%", height="565px" %}{% endpdf %}
 
 ## 1. Actions séquentielles de la cellule robotique
 

@@ -12,6 +12,11 @@
   color: darkgrey;
 }
 
+.page-inner {
+  position: relative;
+  max-width: 1000px;
+}
+
 /* PDF plugin */
 .pdf__link > a {
   display: none;
