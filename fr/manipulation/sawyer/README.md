@@ -5,7 +5,9 @@ La robotique de manipulation regroupe la manipulation d'objets avec des robots :
 ## Prérequis
 
 * BAC+2 et +
-* Aisance en Python
+* Aisance en Python et commandes dans un terminal
+* Aisance en géométrie 3D
+* Le [TP d'introduction](../introduction)
 
 ## Diapositives
 

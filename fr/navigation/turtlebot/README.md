@@ -3,7 +3,10 @@
 ## Prérequis
 
 * Lycée et +
-* Notions de Python
+* Notions de Python et commandes dans un terminal
+* Aisance en géométrie 2D
+* Le [TP d'introduction](../introduction)
+* Ce TP est compatible avec la simulation si vous n'avez pas de Turtlebot
 
 ## Diapositives
 

@@ -1,11 +1,15 @@
 # III. Robotique de manipulation avec Poppy Ergo Jr
 
-La robotique de manipulation regroupe la manipulation d'objets avec des robots : des bras articulés à 5 ou 6 axes, les robots [SCARA](https://en.wikipedia.org/wiki/SCARA) (Selective Compliance Assembly Robot Arm), les robots [cartésiens](https://en.wikipedia.org/wiki/Cartesian_coordinate_robot) (linéaires), les robots [parallèles](https://en.wikipedia.org/wiki/Parallel_manipulator) ... Dans ce TP nous utilisons un robot Sawyer du fabriquant Rethink Robotics.
+La robotique de manipulation regroupe la manipulation d'objets avec des robots. Dans ce TP nous utilisons un robot opensource [Poppy Ergo Jr](https://www.poppy-project.org/fr/robots/poppy-ergo-jr/) qui peut être 100% imprimé en 3D à la maison ou à l'école. 
 
 ## Prérequis
 
 * Lycée et +
+* Notions de commandes dans un terminal et d'adressage IP
 * Notions de Python
+* Notions de géométrie 3D
+* Le [TP d'introduction](../introduction)
+* Ce TP est compatible avec la simulation si vous n'avez pas de Poppy Ergo Jr : sauter directement au 2.3.bis
 
 ## Diapositives
 
@@ -264,12 +268,7 @@ cv2.imshow("Poppy camera", image)
 cv2.waitKey(200)
 
 ```
-Cette image peut ensuite être traitée par un réseau de neurones, une fonction OpenCV, etc ...
-
-## 3. A rendre
-
-* Réponses aux questions ci-dessus dans un fichier README (réponses communes au groupe mais répondez-ici ensemble pour vous assurer que tout le monde a compris)
-* Code de votre package `ros4pro_custom` à rendre
+Cette image peut ensuite être traitée par un réseau de neurones, une fonction OpenCV, etc ... 
 
 ## Documentation
 * [Tutoriaux de MoveIt](https://ros-planning.github.io/moveit_tutorials/)
