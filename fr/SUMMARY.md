@@ -5,6 +5,7 @@
 * II. Navigation
     * [Turtlebot](navigation/turtlebot/README.md)
 * III. Manipulation
+    * [E.DO](manipulation/edo/README.md)
     * [Poppy Ergo Jr](manipulation/ergo-jr/README.md)
     * [Sawyer](manipulation/sawyer/README.md)
     * [Universal Robot](manipulation/ur/README.md)
