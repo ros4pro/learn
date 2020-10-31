@@ -5,6 +5,8 @@
         "summary": "SUMMARY.md"
     },
     "plugins": [
+        "-search",
+        "search-plus",
         "github",
         "anchorjs",
         "build",
