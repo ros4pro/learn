@@ -42,7 +42,7 @@ Jessica Colombel ([Inria](http://inria.fr/)), Rémi Fabre ([CATIE](https://robot
 #### 💬 Besoin d'aide ?
 Posez votre question sur le [forum francophone des utilisateurs de ROS](https://discourse.ros.org/c/local/france/48).
 
-📅  Dernière mise à jour : {{file.mtime | date("DD/MM/YYYY")}}
+📅  Dernière mise à jour : {{file.mtime.toLocaleString()}}
 
 <!-- Default to night theme -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
