@@ -11,9 +11,7 @@
     <img src="/img/logos/ROSIN.png" title="Supported by ROSIN ROS-Industrial Quality-Assured Robot Software Components"/>
   </a>
   
-  <hr/>
-
-  <a href="https://bordeaux-inp.fr">
+  <a href="https://robot-enseirb-matmeca.fr/">
     <img src="/img/logos/Bx-INP.png" title="Bordeaux INP"/>
   </a>  
 
