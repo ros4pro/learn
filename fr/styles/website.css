@@ -25,3 +25,26 @@
 .book-summary ul.summary li .gitbook-link {
   display: none;
 }
+
+/* Flex images */
+.flex {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  padding:5px;
+}
+
+.flex > a {
+  padding: 0;
+  margin: 0;
+  font-size: 0px;
+}
+
+.flex > img,
+.flex > a > img {
+  height: 35px;
+  margin: 5px;
+}
