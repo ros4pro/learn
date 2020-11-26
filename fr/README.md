@@ -15,14 +15,14 @@ ROS4PRO est un ensemble de ressources francophones pour l'apprentissage de la ro
 1. [Introduction](introduction/README.md)
 2. [Navigation](navigation/turtlebot/README.md)
 3. [Manipulation](manipulation/ergo-jr/README.md)
-4. [Perception](perception/perception/keras/README.md)
+4. [Perception](perception/keras/README.md)
 5. [Intégration](integration/ergo-tb-keras/README.md)
 
 ### Parcours n° 2 : Sawyer + Keras + Turtlebot
 1. [Introduction](introduction/README.md)
 2. [Navigation](navigation/turtlebot/README.md)
 3. [Manipulation](manipulation/sawyer/README.md)
-4. [Perception](perception/perception/keras/README.md)
+4. [Perception](perception/keras/README.md)
 5. [Intégration](integration/sawyer-tb-keras/README.md)
 
 ## Légende
