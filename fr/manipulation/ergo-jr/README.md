@@ -135,11 +135,11 @@ Note : si vous devez passer en simulation à ce moment suite à un défaut maté
 #### 2.2.4. Transformations `tf`
 Nous allons visualiser et interroger l'arbre des transformations nommé `tf`
 
-💻✍ Démarrer MoveIt puis dans un autre terminal lancer `rosrun tf view_frames`. Un fichier PDF a été créé, les `frames` (repères) qu'ils contient sont les mêmes que ceux dessinés par Rviz en rouge-vert-bleu.
+💻✍ Démarrer MoveIt puis dans un autre terminal lancer `rosrun tf2_tools view_frames.py`. Un fichier PDF nommé `frames.pdf` a été créé : les `frames` (repères géométriques) qu'ils contient sont les mêmes que ceux dessinés par Rviz en rouge-vert-bleu.
 
 * Comment est nommé le repère de base ?
 * Comment sont nommés les deux effecteurs finaux possibles ?
-* Avec `rosrun tf tf_echo`, déterminez quelle est la position actuelle d'un effecteur dans le repère de base. Ses coordonnées peuvent vous servir pour les définir comme cible à atteindre par la suite.
+* La commande `rosrun tf2_tools echo.py frameA frameB` renvoie la transformation actuelle de frameB dans frameA. Modifiez cette commande pour déterminer quelle est la position actuelle d'un des effecteurs dans le repère de base. Ses coordonnées peuvent vous servir par la suite, pour les définir comme cible à atteindre.
 
 ### 2.3. Ecrire un noeud Python ROS pour l'Ergo Jr
 #### 2.3.1. Créer un nouveau package et un nouveau noeud Python
