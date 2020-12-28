@@ -82,3 +82,7 @@ Une fois cela fait, il ne vous reste plus qu'à remplir la fonction `preprocess_
 ## 4. Final
 
 Une fois terminé, vous pouvez vous rendre dans `main.py` pour tester l'intégration de tout votre travail. Bravo !
+
+## 5. Intégration avec jupyter
+
+{% include "../../notebooks-html/COVID-19.html" %}
