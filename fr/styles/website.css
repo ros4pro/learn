@@ -1,7 +1,7 @@
 /* Night theme override */
 .book.color-theme-2 .book-body .body-inner .book-header {
-    background-color: #a62639;
-    color: white;
+  background-color: #a62639;
+  color: white;
 }
 
 .book.color-theme-2 .fa {
@@ -25,7 +25,6 @@
 .book-summary ul.summary li .gitbook-link {
   display: none;
 }
-
 
 /* Interact button */
 
@@ -68,13 +67,17 @@
 
 .ansicyan,
 pre .kn {
-  color: #0080ff;
+  color: #17b9eb;
 }
 
 .ansigreen,
 pre .n,
 pre .nb {
-  color: #690;
+  color: white;
+}
+
+.nc {
+  color: orange;
 }
 
 .ansired {
@@ -96,7 +99,7 @@ img[src*="/notebooks-images/"] {
 
 pre .o,
 pre .k {
-  color: purple;
+  color: #ff66f0;
 }
 
 pre .p,
@@ -121,4 +124,12 @@ blockquote {
 
 blockquote p {
   margin-top: 0;
+}
+
+.s2, .s1 {
+  color: #7ce82a;
+}
+
+.bp {
+  color: #f76565;
 }
