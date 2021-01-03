@@ -12,7 +12,7 @@
 
 Selon votre situation, une clé USB bootable peut vous être fournie. Dans ce cas, vous devez faire "booter" votre poste de travail sur la clé USB Live fournie.
 
-Dans le cas contraire, il est nécessaire d'avoir vous même installé Ubuntu 18.04 et ROS Melodic. Dans ce cas il se peut que vous ayez à installer vous-même des éléments supplémentaires tout le long des travaux pratiques.
+Dans le cas contraire, il est nécessaire d'avoir vous même installé Ubuntu 20.04 et ROS Noetic. Dans ce cas il se peut que vous ayez à installer vous-même des éléments supplémentaires tout le long des travaux pratiques.
 
 ## 2. Prise en main du terminal : le rosier 🌹
 ⌨️ Pour prendre en main le terminal Linux et les commandes de base, à partir d'un terminal, créez les fichiers et dossiers nécessaires pour réaliser cette hierarchie de fichiers ressemblant à un rosier :
@@ -29,7 +29,7 @@ Vous aurez besoin des commandes suivantes :h
 
 ## 3. Tutoriels
 
-🧑‍🏫 Vous êtes désormais prêt à utiliser ROS ! Suivez les tutoriels ROS suivants pour découvrir et tester les concepts de base, sachant que votre distribution ROS s'appelle `melodic` :
+🧑‍🏫 Vous êtes désormais prêt à utiliser ROS ! Suivez les tutoriels ROS suivants pour découvrir et tester les concepts de base, sachant que votre distribution ROS s'appelle `noetic` :
 
 * [Understanding ROS Nodes](http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes) : Maîtriser ROS master (`roscore`) et lancer des nœuds (`rosrun`)
 * [Understanding ROS Topics](http://wiki.ros.org/ROS/Tutorials/UnderstandingTopics) : Envoyer et recevoir des messages dans un topic (`rostopic`)

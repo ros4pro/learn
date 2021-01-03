@@ -6,7 +6,7 @@ ROS4PRO est un ensemble de ressources francophones pour l'apprentissage de la ro
 
 🤖 Il est probable que vous suiviez ces travaux pratiques dans le cadre d'une formation qui met à votre disposition du matériel robotique. Selon votre matériel, plusieurs parcours sont disponibles ci-dessous. Si vous n'avez pas de matériel, certains parcours peuvent être suivis partiellement en simulation.
 
-💻 Vous devez disposer d'un ordinateur de type PC ainsi que [Ubuntu 18.04 et ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) installés.
+💻 Vous devez disposer d'un ordinateur de type PC ainsi que [Ubuntu 20.04 et ROS Noetic](http://wiki.ros.org/noetic/Installation/Ubuntu) installés.
 
 📀 Pour suivre tous les parcours sans avoir à installer ROS et les dépendances vous-même, vous pouvez télécharger [cette clé USB Live](https://files.ros4.pro/ubuntu.img.7z) et [suivre les instructions de flash](https://files.ros4.pro/boot.pdf).
 
