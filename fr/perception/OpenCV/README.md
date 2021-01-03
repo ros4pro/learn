@@ -1,20 +1,20 @@
-- [IV. Perception avec OpenCV](#org47d67e4)
-  - [Introduction à OpenCV](#org618ab19)
-  - [Ouverture d'une image](#org079def8)
-  - [Seuil sur la couleur](#org751085b)
-  - [Détection des cubes](#org53c88ba)
-  - [Intégration avec ROS](#org190ceb6)
+- [IV. Perception avec OpenCV](#orgdf41233)
+  - [Introduction à OpenCV](#org134b5d0)
+  - [Ouverture d'une image](#orge106897)
+  - [Seuil sur la couleur](#orgf888e92)
+  - [Détection des cubes](#org281dbcf)
+  - [Intégration avec ROS](#orga2455b8)
 
 
 
-<a id="org47d67e4"></a>
+<a id="orgdf41233"></a>
 
 # IV. Perception avec OpenCV
 
 Le domaine de "Computer Vision" (CV, ou vision par ordinateur) est une branche de l'intelligence artificielle, qui traite des techniques permettant d'extraire des informations de "haut niveau" utiles à partir d'images. Donc ce domaine développé depuis les années 60, on retrouve généralement des techniques provenant des mathématiques, du traitement d'images, des neurosciences, de l'apprentissage artificiel&#x2026; Nous allons ici effleurer ce domaine en nous familiarisant avec [OpenCV](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_tutorials.html).
 
 
-<a id="org618ab19"></a>
+<a id="org134b5d0"></a>
 
 ## Introduction à OpenCV
 
@@ -25,7 +25,7 @@ OpenCV est une bibliothèque logicielle qui est devenue le "standard" du domaine
 -   Des milliers d'algorithmes développés par la communauté et les industriels (reconnaissance d'image, suivi d'objet, vision 3D, apprentissage&#x2026;)
 
 
-<a id="org079def8"></a>
+<a id="orge106897"></a>
 
 ## Ouverture d'une image
 
@@ -66,7 +66,7 @@ OpenCV est une bibliothèque logicielle qui est devenue le "standard" du domaine
 -   Affichez les trois canaux de couleur dans des fenêtres différentes
 
 
-<a id="org751085b"></a>
+<a id="orgf888e92"></a>
 
 ## Seuil sur la couleur
 
@@ -91,7 +91,7 @@ Nous avons vu que les images sont généralement représentés dans l'espace `BG
 -   Expérimentez avec les valeurs de seuil pour ne faire apparaître que le cube rouge Note: il est facile de créer des "trackbars" pour changer en temps réel les valeurs, voir le [tutoriel](https://docs.opencv.org/master/d9/dc8/tutorial_py_trackbar.html)
 
 
-<a id="org53c88ba"></a>
+<a id="org281dbcf"></a>
 
 ## Détection des cubes
 
@@ -132,13 +132,13 @@ Nous sommes maintenant capable de sélectionner des pixels en fonction de leur c
 -   Maintenant que nous sommes capable de détecter un cube d'une couleur, étendez le programme pour détecter la présence et la position des 3 cubes
 
 
-<a id="org190ceb6"></a>
+<a id="orga2455b8"></a>
 
 ## Intégration avec ROS
 
 Nous allons maintenant intégrer cette détection de cube coloré à ROS en lisant l'image de la caméra de Ergo Jr simulée par Gazebo.
 
--   On peut visualiser les images avec l'outil rqt<sub>image</sub><sub>view</sub>: `rosrun rqt_image_view rqt_image_view` Les images brutes sont publiées sur le topic: `/ergo_jr/camera_ergo/image_raw`
+-   On peut visualiser les images avec l'outil `rqt_image_view`: `rosrun rqt_image_view rqt_image_view` Les images brutes sont publiées sur le topic: `/ergo_jr/camera_ergo/image_raw`
 -   Attrapez chacun des cubes et récupérez des images de la caméra qui vous servirons à vérifier le bon fonctionnement de votre programme précédant
 -   Dans votre package ROS créez le fichier `ros4pro/src/vision.py`
 
