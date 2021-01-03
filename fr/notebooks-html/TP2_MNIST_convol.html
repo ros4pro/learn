@@ -1,0 +1,794 @@
+
+
+
+  <div class="cell border-box-sizing text_cell rendered">
+    <button class="js-nbinteract-widget">
+      Show All Widgets
+    </button></div>
+
+
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Machine-learning-avec-les-modules-Python-tensorflow2/keras">Machine learning avec les modules Python tensorflow2/keras<a class="anchor-link" href="#Machine-learning-avec-les-modules-Python-tensorflow2/keras">&#182;</a></h1></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Les concepts de base du <em>Machine Learning</em> (ML) peuvent être consultés si besoin dans le notebook du TP1 :  <code>TP1_MNIST_dense.ipynb</code>.</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Entra&#238;nement-/-exploitation-d'un-r&#233;seau-de-neurones-convolutionnel-pour-la-reconnaissance-de-chiffres-manuscrits">Entra&#238;nement / exploitation d'un r&#233;seau de neurones convolutionnel pour la reconnaissance de chiffres manuscrits<a class="anchor-link" href="#Entra&#238;nement-/-exploitation-d'un-r&#233;seau-de-neurones-convolutionnel-pour-la-reconnaissance-de-chiffres-manuscrits">&#182;</a></h2></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>L'objectif du TP2 est de comprendre le fonctionnement d'un réseau de neurones convolutionnel et de mettre en oeuvre sa construction à l'aide du module <strong>keras</strong>, utilisé comme interface <em>high level</em> du module <strong>tensorflow</strong>. <br /></p>
+<p>Le séquencement de ce TP reste le même que celui du TP1 :</p>
+<ul>
+<li>Rappels sur le fonctionnement des réseaux convolutionels</li>
+<li>Chargement des images depuis la banque MNIST.<br>
+Dans ce TP les images ne sont pas applaties en vecteurs car un réseau convolutionnel accepte des tableaux multidimensionnels en entrée.</li>
+<li>Construction du modèle avec <em>keras</em>.</li>
+<li><em>one-hot encoding</em> des labels des images pour les rendre compatibles avec les sorties du réseau de neurones.</li>
+<li>Entraînement &amp; analyse des résultats.</li>
+</ul></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="A/-Les-R&#233;seaux-de-Neurones-Convolutionnels-(RNC)">A/ Les R&#233;seaux de Neurones Convolutionnels (RNC)<a class="anchor-link" href="#A/-Les-R&#233;seaux-de-Neurones-Convolutionnels-(RNC)">&#182;</a></h1></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Principes-g&#233;nraux">Principes g&#233;nraux<a class="anchor-link" href="#Principes-g&#233;nraux">&#182;</a></h2><p>Les Réseaux de Neurones Convolutionnels (RNC, en anglais <em>CNN</em> :<em>Convolutionnal Neural Networl</em>) proposent des structures particulièrement efficaces pour l'analyse du contenu des images. Pour cela les RNC mettent en oeuvre des traitements et une architecture et bien spécifiques :</p>
+<ul>
+<li>l'extraction des caractéristiques des images (<em>features</em>) à l'aide de filtres convolutifs,</li>
+<li>la réduction de la quantité d'information générée par la convolution avec des filtres de <em>pooling</em>,</li>
+<li>une architecture qui empile des structures "convolution &gt; activation &gt; pooling..." chargées d'extraire les caractéristiques de l'image (<em>features</em>) qui sont au final applaties et envoyées en entrée d'un réseau dense chargé de l'étape de classification.</li>
+</ul>
+<p>Dans la suite du TP, nous construirons un RNC inspiré du réseau <code>LeNet5</code>, un des premiers RNC proposé par Yann LeCun <em>et al.</em> dans les années 90 pour la reconnaisannce des images MNIST :</p>
+<p style="text-align:center; font-style:italic; font-size:12px;">
+    <img src="img/LeNet5.png" ><br>
+    [Lecun, Y.; Bottou, L.; Bengio, Y.; Haffner, P. (1998). "Gradient-based learning applied to document recognition". Proceedings of the IEEE. 86 (11): 2278–2324. doi:10.1109/5.726791.]
+</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Extraction-des-caract&#233;ristiques-d'une-image-avec-un-filtre-de-convolution">Extraction des caract&#233;ristiques d'une image avec un filtre de convolution<a class="anchor-link" href="#Extraction-des-caract&#233;ristiques-d'une-image-avec-un-filtre-de-convolution">&#182;</a></h3><p>La convolution d'une image par un filtre (aussi appelé noyau, <em>kernel</em>) revient à déplacer une 'petite' fenêtre 2D ( 3x3, 5x5 ....) sur l'image et à calculer à chaque fois le produit tensoriel contracté entre les élements du filtre et les pixels de l'image délimités par le filtre (somme des produits terme à terme).<br></p>
+<p>L'animation ci-dessous illustre la convolution d'une image 5x5 par un filtre 3x3 sans <em>padding</em> sur les bords : on obtient une nouvelle image plus petite de 3x3 pixels<br></p>
+<p style="text-align:center; font-style:italic; font-size:12px;">
+    <img src="img/filter_3x3.png" width="80" style="display:inline-block;">
+    <img src="img/Convolution_schematic.gif" width="300" style="display:inline-block;"><br>
+    [crédit image : <a href="http://deeplearning.stanford.edu/tutorial">Stanford deep learning tutorial</A>]
+</p><p>Pour conserver la taille de l'image traitée, on peut faire appel à du <em>padding</em> pour créer de nouvelles données sur les bords de l'image (par dupplication des données sur les bords par exemple) :</p>
+<p style="text-align:center; font-style:italic; font-size:12px;">
+    <img src="img/padding.gif" width="350"><br>
+    [crédit image : <a href="https://towardsdatascience.com/applied-deep-learning-part-4-convolutional-neural-networks-584bc134c1e2"> Arden Dertat</a> ]
+</p><p>Le but de la convolution est d'extraire des caractéristiques particulières présentes dans l'image source : on parle de "carte des caratéristiques" (<em>feature map</em>) pour désigner l'image produite par l'opération de convolution. L'état de l'art conduit à utiliser plusieurs filtres convolutifs pour extraire des caractéristiques différentes : on peut avoir jusqu'à plusieurs dizaines de filtres convolutifs dans un même couche du réseau qui génèrent autant de <em>feature map</em>.</p>
+<h4 id="Exemples-d'extraction-de-caract&#233;ristiques-avec-des-filtres-convolutifs-connus-(filtre-de-Prewitt):">Exemples d'extraction de caract&#233;ristiques avec des filtres convolutifs connus (filtre de <a href="https://fr.wikipedia.org/wiki/Filtre_de_Prewitt">Prewitt</a>):<a class="anchor-link" href="#Exemples-d'extraction-de-caract&#233;ristiques-avec-des-filtres-convolutifs-connus-(filtre-de-Prewitt):">&#182;</a></h4><p>À titre d'exemple, la figure ci-dessous montre les <em>features maps</em> obtenues en convoluant une image MNIST (un chiffre 7) avec 4 filtres 3x3 connus en traitement d'image (filtres de Prewitt pour l'extraction de contours):</p>
+<p style="text-align:center; font-style:italic; font-size:12px;">
+    <img src="img/7_mnist_4_filtres.png" width="500"><br>
+    [crédit image : JLC]
+</p><p>On voit que ces filtres agissent comme des filtres de détection de contour : dans les images de sortie, les pixels les plus blancs constituent ce que les filtres ont détecté :</p>
+<ul>
+<li>les filtre (a) et (c) détectent des contours horizontaux inférieurs et supérieurs,</li>
+<li>les filtre (b) et (d) détectent des contours verticaux droite et gauche.</li>
+</ul>
+<p>Ces exemples très simples permettent de comprendre comment fonctionne l'extraction des <em>features</em> d'une image par filtrage convolutif.</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="Cas-g&#233;n&#233;ral-:-images-RGB-trait&#233;e-par-plusieurs-filtres-de-convolution">Cas g&#233;n&#233;ral : images RGB trait&#233;e par plusieurs filtres de convolution<a class="anchor-link" href="#Cas-g&#233;n&#233;ral-:-images-RGB-trait&#233;e-par-plusieurs-filtres-de-convolution">&#182;</a></h6><p>Dans le cas général où les images correpondent à des tableaux 3D (les 3 couleurs R(ed), G(reeen) &amp;  B(lue)), le filtre de convolution est lui aussi un tableau 3D. L'opération reste identique au cas 1D : pour une position du filtre 3D sur l'image, le produit tensoriel contracté du filtre avec le sous-tableau 3D correspondant dans l'image fournit un nombre scalaire, et le balayage du procédé sur toute l'image donne la matrice des caractéristiques (<em>feature map</em>) de l'image.</p>
+<p>Par exemple si l'on utilise 10 filtres de convolution 5x5 (10 tableaux de dimensions (5,5,3)) pour filtrer une image RGB de 32x32 pixels (tableau de dimensions (32,32,3), on obtient une <em>feature maps</em>  de dimensions (32,32,10), soit 10240 termes alors que l'image source n'en a que 1024 !</p>
+<p style="text-align:center; font-style:italic; font-size:12px;">
+    <img src="img/conv_3D_10.png" width="350"><br>
+    [crédit image : <a href="https://towardsdatascience.com/applied-deep-learning-part-4-convolutional-neural-networks-584bc134c1e2"> Arden Dertat</a> ]
+</p><p>$\leadsto$ Pour réduire la quantité d'information générée par les filtres de convolution sans perdre trop d'information, la convolution est toujours suivie d'une opération de <em>pooling</em>.</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Du-filtre-convolutif-&#224;-la-couche-de-neurones-convolutifs">Du filtre convolutif &#224; la couche de neurones convolutifs<a class="anchor-link" href="#Du-filtre-convolutif-&#224;-la-couche-de-neurones-convolutifs">&#182;</a></h4><p>L'intégration du filtrage convolutif dans la structure du réseau de neurones donne l'organisation des calculs  suivante :</p>
+<ul>
+<li><p>Chaque filtre convolutif posssède les mêmes coefficients pour les 3 couleurs : pour le réseau LeNet5 par exemple, chacun des 6 filtres 5x5x3 de la première possède seulement 25 coefficients, identiques pour les plans R, G &amp; B.</p>
+</li>
+<li><p>Chaque unité (neurone) d'une <em>feature map</em> de la couche C1 reçoit 75 valeurs de pixels (25 pixels rouges $R_i$, 25 pixels vert $G_i$ et 25 pixels bleus $B_i$) délimités par la position du filtre dans l'image.</p>
+</li>
+<li><p>Le neurone $k$ d'une <em>feature map</em> calcule une sortie $y_k = F_a(\sum_{i=1}^{25}{\omega_i(R_i + G_i + B_i) - b_k})$, où $b_k$ est le biais du neurone $k$ et $F_a$ la fonction d'activation (très souvent <code>relu</code>).</p>
+</li>
+<li><p>on a donc  6 x (25 + 1) paramètres, soit 156 paramètres inconnues, pour la couche C1 qui seront déterminé par entraînement du réseau.</p>
+</li>
+</ul>
+<p>Le même schéma est utilisé dans toutes les couches convoltionnelles.</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Le-pooling">Le <em>pooling</em><a class="anchor-link" href="#Le-pooling">&#182;</a></h3><p>Le <em>pooling</em> vise à réduire quantité de données à traiter. Comme pour l'opération de convolution, on déplace un filtre sur les éléments du tableau <em>feature map</em>  et à chaque position du filtre sur le tableau, on calcule un nombre représentant tous les éléments sélectionnés dans le filtre (par exemple la valeur maximale, ou la moyenne....). Mais contrairement à la convolution, on déplace le filtre sans recouvrement.<br>
+Dans l'exemple simplifié ci-dessous, le filtre <em>max spool</em> transforme la matrice 8x8 en une matrice 4x4 qui contient "à peu près" la même information :</p>
+<p style="text-align:center; font-style:italic; font-size:12px;">
+    <img src="img/max_pool_2x2.png" width="350"><br>
+    [crédit image : JLC</a> ]
+</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="C/-Travail-&#224;-faire">C/ Travail &#224; faire<a class="anchor-link" href="#C/-Travail-&#224;-faire">&#182;</a></h1></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Environnement-Python-de-travail">Environnement Python de travail<a class="anchor-link" href="#Environnement-Python-de-travail">&#182;</a></h2><div class="alert alert-block alert-danger">
+<span style="color:brown;font-family:arial;font-size:normal"> 
+L'état de l'art actuel des projets de machine learning sous Python préconise l'utilisation d'un <span style="font-weight:bold;">Environnement Virtuel Python</span> (EVP) qui permet de maîtriser pour chaque projet les versions des modules Python "sensibles" (comme tensorflow par exemple).
+
+Dans le cas d'un démarrage de l'ordinateur avec une clef USB Ubuntu, on peut considérer que la clef fournit un environnement Python dédié, à condition de ne pas faire de mises à jour des paquets Python avec <span style="font-style:italic">pip install...</span>
+
+Dans le cas contraire, la <A href="https://learn.ros4.pro/fr/faq/Python/">FAQ Python</A> explique comment créer et utiliser un EVP pour utiliser **numpy** et **tensorflow2** avec la bibliothèque optimisée <A href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html">MKL</A>.
+</span></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Modules-Python-tensorflow/keras">Modules Python tensorflow/keras<a class="anchor-link" href="#Modules-Python-tensorflow/keras">&#182;</a></h3><p>Le module <strong>keras</strong> qui permet une manipulation de haut niveau des objets <strong>tensorflow</strong> est intégré dans le module <strong>tensorflow</strong> (tf) depuis la version 2. <br>
+La documentation du module <strong>tf.keras</strong> à consulter pour ce TP est ici : <a href="https://www.tensorflow.org/api_docs/python/tf/keras">https://www.tensorflow.org/api_docs/python/tf/keras</a>.</p>
+<p>Versions des modules Python validées pour ce TP sous Ubuntu 20 / Python3.8.5 :</p>
+<ul>
+<li>tensorflow 2.4.0 incluant tensorflow.keras 2.4.0</li>
+<li>OpenCV 4.2.0</li>
+</ul></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">cv2</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python    : </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tensorflow: </span><span class="si">{</span><span class="n">tf</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2"> incluant keras </span><span class="si">{</span><span class="n">keras</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OpenCV    : </span><span class="si">{</span><span class="n">cv2</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Incrustation-des-trac&#233;s-matplotlib-dans-le-cahier-IPython-et-import-de-modules-utiles-:">Incrustation des trac&#233;s matplotlib dans le cahier IPython et import de modules utiles :<a class="anchor-link" href="#Incrustation-des-trac&#233;s-matplotlib-dans-le-cahier-IPython-et-import-de-modules-utiles-:">&#182;</a></h4></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Affectation-des-graines-(seed)-des-g&#233;n&#233;rateurs-pseudo-al&#233;atoires-:">Affectation des graines (<em>seed</em>) des g&#233;n&#233;rateurs pseudo-al&#233;atoires :<a class="anchor-link" href="#Affectation-des-graines-(seed)-des-g&#233;n&#233;rateurs-pseudo-al&#233;atoires-:">&#182;</a></h4><p>Le TP1 donne plus de détails sur la reproductibilité des générateurs pseudo-aléatoires utilisés.</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">SEED</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>      
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1---R&#233;cup&#233;ration-et-mise-en-forme-des-donn&#233;es-MNIST">1 - R&#233;cup&#233;ration et mise en forme des donn&#233;es MNIST<a class="anchor-link" href="#1---R&#233;cup&#233;ration-et-mise-en-forme-des-donn&#233;es-MNIST">&#182;</a></h2></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Plus de détails sur les images MNIST sont donnés dans le notebook <code>TP1_MNIST_dense.ipynb</code>.</p>
+<p>Consulter la documentation de la fonction <code>load_data</code> sur la page <a href="https://www.tensorflow.org/api_docs/python/tf/keras/datasets/mnist/load_data">tf.keras.datasets.mnist.load_data</a> puis compléter la cellule ci-dessous pour charger les données du MNIST en nommant les données renvoyées :<br></p>
+<ul>
+<li><code>im_train</code>, <code>im_test</code> pour les images d'entraînement et de test,</li>
+<li><code>lab_train</code>, <code>lab_test</code> pour les labels des données d'entraînement et de test.</li>
+</ul></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>La cellule ci-dessous affiche les attributs <code>shape</code> et <code>dtype</code> des tableaux numpy obtenus : les valeurs son-elles cohérentes ?</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;im_train -&gt; shape:&quot;</span><span class="p">,</span> <span class="n">im_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;, dtype:&quot;</span><span class="p">,</span> <span class="n">im_train</span><span class="o">.</span><span class="n">dtype</span><span class="p">,)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;im_test  -&gt; shape:&quot;</span><span class="p">,</span> <span class="n">im_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>  <span class="s2">&quot;, dtype:&quot;</span><span class="p">,</span> <span class="n">im_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">,)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;lab_train-&gt; shape:&quot;</span><span class="p">,</span> <span class="n">lab_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>  <span class="s2">&quot;, dtype:&quot;</span><span class="p">,</span> <span class="n">lab_train</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;lab_test -&gt; shape:&quot;</span><span class="p">,</span> <span class="n">lab_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>  <span class="s2">&quot;, dtype:&quot;</span><span class="p">,</span> <span class="n">lab_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Mise-en-forme-des-donn&#233;es-d'entr&#233;e">Mise en forme des donn&#233;es d'entr&#233;e<a class="anchor-link" href="#Mise-en-forme-des-donn&#233;es-d'entr&#233;e">&#182;</a></h2></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Les couches convolutionnelles du module keras attendent des tableaux multidimentionnels de la forme <code>(batch_size, width, height, dpth)</code> :</p>
+<ul>
+<li><code>batch_size</code> : nombre d'image en entrée,</li>
+<li><code>width</code> et <code>height</code> : largeur et hauteur des images (en pixels),</li>
+<li><code>depth</code> : profondeur des tableaux (<code>3</code> pour une image RGB, <code>1</code> pour une image en ton de gris).</li>
+</ul>
+<p>La forme des images MNIST est :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">im_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">im_test</span><span class="o">.</span><span class="n">shape</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Il faut donc rajouter une dimension (égale à <code>1</code>) après la troisième dimension <code>28</code>, par exemple avec la méthode <code>reshape</code> des tableaux <code>ndarray</code> de numpy.</p>
+<p>(Compléter la cellule suivante pour définir <code>x_train</code> et <code>x_test</code> obtenus en ajoutant une quatrième dimension égale à 1) aux tableaux <code>im_train</code> et <code>im_test</code> et en normalisant les valeurs :</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Vérification :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">im_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">im_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">x_test</span><span class="o">.</span><span class="n">shape</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Mise-au-format-one-hot-des-labels-MNIST">Mise au format <em>one-hot</em> des labels MNIST<a class="anchor-link" href="#Mise-au-format-one-hot-des-labels-MNIST">&#182;</a></h3><p>Il faut mettre les labels MNIST au format <em>one-hot</em> qui permet de calculer l'erreur entre un label et la sortie de la couche de classification du réseau (voir le TP1 pour les détails sur le format <em>one-hot</em>).<br>
+Consulter la page <a href="https://www.tensorflow.org/api_docs/python/tf/keras/utils/to_categorical">tf.keras.utils.to_categorical</a> sur la fonction <code>to_categorical</code> et en déduire comment transformer les tableaux <code>lab_train</code> et <code>lab_test</code> en tableaux <code>y_train</code> et <code>y_test</code> contenant des vecteurs encodés <em>hot-one</em> :</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3---Construction-du-r&#233;seau-de-neurones">3 - Construction du r&#233;seau de neurones<a class="anchor-link" href="#3---Construction-du-r&#233;seau-de-neurones">&#182;</a></h2></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On va maintenant construire dans la cellule ci-dessous le réseau de neurones <strong>convolutionnel</strong> à l'aide du module <strong>keras</strong>.</p>
+<p>Comme dans le TP1, on crée un objet instance de la classe <code>Sequential</code> (cf <a href="https://www.tensorflow.org/api_docs/python/tf/keras/Sequential">tf.keras.Sequential</a>) que l'on pourra nommer <code>net_conv</code>, puis on complète <code>net_conv</code> de façon  incrémentale en ajoutant chaque couche avec la méthode <code>add</code> :</p>
+<ul>
+<li><p>La couche d'entrée de type <code>InputLayer</code> (cf <a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/InputLayer">tf.keras.layers.InputLayer</a>) sert à spécifier la forme des données d'entrée.<br>
+La forme attendue par keras pour des images en entrée est (width,height,depth) : on pourra l'obtenir par exemple avec l'attribut <code>shape</code> de n'importe quelle image du jeu <code>x_train</code> reformaté.<br><br></p>
+</li>
+<li><p>Les couches convolutionnelles sont de type <code>Conv2D</code> (cf <a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Conv2D">tf.keras.layers.Conv2D</a>) :</p>
+<ul>
+<li>les 2 premiers arguments (positionnels) sont : <ul>
+<li>le nombre de filtres de la couche</li>
+<li>la forme du filtre : on peut spécifier  <code>N</code> ou <code>(N,N)</code> pour spécifier un filtre N x N</li>
+</ul>
+</li>
+<li>les autres arguments (nommés) utilisés sont :<ul>
+<li><code>stride</code> : le pas du déplacement du filtre de convolution, valeur par défaut :  <code>stride=1</code> (équivalent à <code>(1, 1)</code>))</li>
+<li><code>padding=valid</code> : pas de padding, ou <code>padding=same</code> : sortie de même dimensions que l'entrée (défaut : <code>valid</code>)</li>
+<li><code>activation</code> : choix de la focntion d'activation (<code>'relu'</code>, '<code>tanh'</code>...)<br><br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Les couches de <em>pooling</em> du réseau LeNet5 historique utilisent un filtre <em>average pool</em> qui correspond à la classe <code>AveragePooling2D</code>  (cf <a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/AveragePooling2D">tf.keras.layers.AveragePooling2D</a>, mais on aura de meilleurs résultats avec un filtrage <em>max pool</em> qui retient la valeur max des pixels dans la fenêtre du filtre (voir la page <a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/MaxPool2D">tf.keras.layers.MaxPool2D</a>). Principaux arguments à utiliser avec <code>MaxPool2D</code> :</p>
+<ul>
+<li><code>pool_size</code> :  <code>N</code> ou <code>(N,N)</code> pour spécifier un filtre N x N (défaut : <code>(2,2)</code>)</li>
+<li><code>strides</code> : int, tuple de 2 int, ou None. Si None (valeur par défaut), prend la même valeur que <code>pool_size</code></li>
+<li><code>padding</code> : comme pour la classe <code>Conv2D</code><br><br></li>
+</ul>
+</li>
+<li><p>Pour applatir les 16 <em>feature maps</em> 5x5 en un vecteur de 16<em>5</em>5=635 éléments, on peut utiliser une couche  <code>Flatten</code> (cf <a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Flatten">tf.keras.layers.Flatten</a>)<br><br></p>
+</li>
+</ul>
+<p>Avec les spécification du réseau Net5 de la figure ci-dessous, on obtient :</p>
+<ul>
+<li>couche d'entrée : <code>Input(shape=x_train[0].shape)</code> : on utilise l'attribut <code>shape</code> de la 1ère image (28x28 pixels gris) qui vaut (28,28,1).</li>
+<li>couche C1 : <code>Conv2D(6, 5, padding='same', activation='relu', name='C1')</code></li>
+<li>couche S2 : <code>MaxPool2D(pool_size=2, name='S2')</code></li>
+<li>couche C3 : <code>Conv2D(16, 5, padding='valid', activation='relu', name='C3')</code></li>
+<li>couche S4 : <code>MaxPool2D(pool_size=2, name='S4')</code></li>
+<li>couche d'applissement : <code>Flatten()</code></li>
+<li>couche C5 : <code>Dense(200, activation='relu', name='C5')</code></li>
+<li>couche F5 : <code>Dense(84, activation='relu', name='F6'</code></li>
+<li>couche OUTPUT : <code>Dense(nb_classe, activation='softmax', name='Output')</code></li>
+</ul>
+<p>Une fois construit, le réseau doit être compilé (au sens de tensorflow) avec la méthode <code>compile</code> en utilisant par exemple les :</p>
+<ul>
+<li><code>loss='categorical_crossentropy'</code> : choix de la fonction d'erreur (cf <a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/categorical_crossentropy">tf.keras.categorical_crossentropy</a>)</li>
+<li><code>optimizer='adam'</code> : choix de l'optimiseur Adam (cf page <a href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers/Adam">tf.keras.optimizers.Adam</a>)</li>
+<li><code>metrics=['accuracy']</code> pour obtenir les données permettant de tracer les courbes de performance.</li>
+</ul></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">AveragePooling2D</span><span class="p">,</span> <span class="n">MaxPool2D</span><span class="p">,</span> <span class="n">Flatten</span>
+
+<span class="n">nb_classe</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+
+<span class="n">net_conv</span> <span class="o">=</span> 
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Avec la méthode <code>summary</code> de l'objet <code>net_conv</code>, faire afficher la description du modèle : noter les valeurs des paramètres...</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>La fonction <code>tf.keras.utils.plot_model.plot_model</code> permet aussi de dessiner la structure du réseau (voir la page <a href="https://www.tensorflow.org/api_docs/python/tf/keras/utils/plot_model">tf.keras.utils.plot_model</a>).<br>
+Faire tracer la structure du modèle en ajoutant l'option <code>show_shapes=True</code> à l'appel de <code>net_conv</code> :</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Sauvegarde-de-l'&#233;tat-initial-du--r&#233;seau">Sauvegarde de l'&#233;tat initial du  r&#233;seau<a class="anchor-link" href="#Sauvegarde-de-l'&#233;tat-initial-du--r&#233;seau">&#182;</a></h3></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On peut sauvegarder l'état initial des poids du réseau non-entraîné (valeurs aléatoires) avec la méthode <code>Model.save_weights</code>. <br>
+Ce sera utile plus loin pour remettre le réseau à son état initial avant de relancer d'autres entraînements :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># vérifier que le dossier &#39;weights&#39; existe et sinon le créer:</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">):</span> <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">)</span>
+
+<span class="c1"># sauvegarde des poinds du réseau initial:</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;net_conv_initial&#39;</span>
+<span class="n">net_conv</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="s1">&#39;weights/&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">)</span>
+
+<span class="c1"># afficher les fichiers créés:</span>
+<span class="n">files</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">,</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Remarque : la méthode <code>save_weights</code> utilise la partie <code>key</code> du chemin passé en argument pour préfixer les fichiers créés.<br>
+Lors de la lecture ultérieure des poids du réseau avec la méthode <code>load_weights</code> de la classe <code>Sequential</code>, il suffira de donner la même information pour retrouver les bons fichiers.</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4---Entra&#238;nement-du-r&#233;seau-avec-test-&#224;-chaque-epoch">4 - Entra&#238;nement du r&#233;seau avec test &#224; chaque <code>epoch</code><a class="anchor-link" href="#4---Entra&#238;nement-du-r&#233;seau-avec-test-&#224;-chaque-epoch">&#182;</a></h2></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Consulter au besoin la documentation de la méthode <code>fit</code> dans la page <a href="https://www.tensorflow.org/api_docs/python/tf/keras/Sequential">tf.keras.Sequential</a>.</p>
+<p>Compléter la cellule ci-dessous pour entraîner le réseau en utilisant la méthode <code>fit</code> de l'objet <code>net_conv</code> avec les arguments :</p>
+<ul>
+<li><code>x_train</code> : les 60000 images </li>
+<li><code>y_train</code> : les 60000 labels encodés <em>one-hot</em>.</li>
+<li><code>epochs=10</code> : faire 10 fois l'entraînement complet.</li>
+<li><code>batch_size=128</code> : découper le jeu des données d'entrée (les 60000 images) en "lots" (<em>batch</em>) de taille <code>batch_size</code>.<br>
+La mise à jour des poids du réseau est faite au bout de <code>batch_size</code> échantillons d'entrée. La valeur de <code>batch_size</code> (par défaut est 32) est un paramètre qui influe beaucoup sur la qualité de l'apprentissage : on peut essayer d'autres valeurs (64, 128 ...) et observer comment évoluent les performances d'entraînement).</li>
+</ul>
+<p>Pour avoir un indicateur réaliste de la qualité du réseau entraîné on teste à chaque <code>epoch</code> la précison du réseau entraîné en utilisant les données de test : il faut passer l'agument <code>validation_data</code> à la méthode <code>fit</code>, en lui affectant le tuple des données de test <code>(x_test, y_test)</code></p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># au cas on on exécute plusieurs fois cette cellule, il faut ré-initialiser </span>
+<span class="c1"># les poids du réseau à leur valeur initiale si on veut comparer les entraînements...</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;net_conv_initial&#39;</span>
+<span class="n">net_conv</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="s1">&#39;weights/&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">)</span>  
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+
+<span class="n">hist</span> <span class="o">=</span> <span class="n">net_conv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>L'objet <code>hist</code> retourné par la méthode <code>fit</code> possède un attribut <code>history</code> de type dictionnaire dont les clefs <code>'loss'</code>, <code>'accuracy'</code> contiennent l'évaluation de la fonction de cout et de la précision du réseau à la fin de chaque (<em>epoch</em>) avec les données d'entraînement. Les clefs <code>'val_loss'</code> et <code>'val_accuracy'</code> sont associées aux données de test.</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hist</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hist</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">],</span> <span class="n">hist</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span> <span class="n">hist</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">],</span> <span class="n">hist</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">],</span> 
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Trac&#233;-des-courbes-accuracy-et-loss--de-l'entra&#238;nement-et-des-test-:">Trac&#233; des courbes <code>accuracy</code> et <code>loss</code>  de l'entra&#238;nement et des test :<a class="anchor-link" href="#Trac&#233;-des-courbes-accuracy-et-loss--de-l'entra&#238;nement-et-des-test-:">&#182;</a></h4></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>La fonction <code>plot_loss_accuracy</code> du module <code>utils.tools</code> (présent dans le répertoire du notebook) permet de tracer les courbes de précision et de perte en utilisant les données stockées dans l'objet <code>hist</code>. Faire tracer ces courbes :</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Arr&#234;ter-automatiquement-l'entra&#238;nement-avant-over-fit">Arr&#234;ter automatiquement l'entra&#238;nement avant <em>over-fit</em><a class="anchor-link" href="#Arr&#234;ter-automatiquement-l'entra&#238;nement-avant-over-fit">&#182;</a></h3><p>Keras propose des outils pour arrêter automatiquement l'apprentissage en surveillant par exemple la croissance de la précision d'une <code>epoch</code> à l'autre. On peut ainsi définir une liste de fonctions <em>callback</em> que l'on peut passer en argument à la focntion <code>fit</code> avec l'agument nommé  <code>callbacks</code> :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
+
+<span class="n">callbacks_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">,</span>  <span class="c1"># la grandeur à surveiller</span>
+                  <span class="n">patience</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>              <span class="c1"># on accepte que &#39;val_accuracy&#39; puisse diminuer 2 fois de suite</span>
+                  <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># recharger l&#39;état initial du réseau:</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;net_conv_initial&#39;</span>
+<span class="n">net_conv</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="s1">&#39;weights/&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">)</span>  
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+
+<span class="n">hist</span> <span class="o">=</span> <span class="n">net_conv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Tracer les courbes <code>loss</code> et <code>accuracy</code> :</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Le réseau convolutionnel tend vers une meilleure précision voisine de 99%.</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Sauvegarder-les-poids-du--r&#233;seau-entra&#238;n&#233;">Sauvegarder les poids du  r&#233;seau entra&#238;n&#233;<a class="anchor-link" href="#Sauvegarder-les-poids-du--r&#233;seau-entra&#238;n&#233;">&#182;</a></h3></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>La méthode <code>save_weights</code> de la classe <code>Sequential</code>permet d'enregistrer les <strong>poids</strong> du réseau entraïné dans un fichier :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># vérifier que le dossier &#39;weights&#39; existe et sinon le créer:</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">):</span> <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">)</span>
+
+<span class="c1"># sauvegarde des poids du réseau entrainé:</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;net_conv_trained&#39;</span>
+<span class="n">net_conv</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="s1">&#39;weights/&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">)</span>
+
+<span class="c1"># afficher les fichiers créés:</span>
+<span class="n">files</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">,</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Sauvegarder-la-structure-du-r&#233;seau-et-ses-poids">Sauvegarder la structure du r&#233;seau et ses poids<a class="anchor-link" href="#Sauvegarder-la-structure-du-r&#233;seau-et-ses-poids">&#182;</a></h3></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>La méthode <code>save</code> de la classe <code>Sequential</code> permet d'enregistrer <strong>toute la structure et les poids</strong> du réseau entraïné dans un fichier.<br />
+Ceci permet de recréer plus tard <em>from scratch</em> le réseau entrainé pour passer en phase exploitation du réseau par exemple, en utilisant la fonction<code>tf.keras.models.load_model</code> :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># vérifier que le dossier &#39;weights&#39; existe et sinon le créer:</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;models&quot;</span><span class="p">):</span> <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;models&quot;</span><span class="p">)</span>
+
+<span class="c1"># sauvegarder structure réseau + poids :</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;net_conv&#39;</span>
+<span class="n">net_conv</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;models/&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">)</span> 
+
+<span class="c1"># afficher les fichiers créés:</span>
+<span class="n">files</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;models&quot;</span><span class="p">,</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;models&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6/-Exploitation-du-r&#233;seau-avec-le-jeu-de-test">6/ Exploitation du r&#233;seau avec le jeu de test<a class="anchor-link" href="#6/-Exploitation-du-r&#233;seau-avec-le-jeu-de-test">&#182;</a></h2></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>La méthode <code>predict</code> de l'objet <code>net_conv</code> permet de calculer la prédiction du réseau pour une ou plusieurs entrées (voir la méthode <code>predict</code>dans la page <a href="https://www.tensorflow.org/api_docs/python/tf/keras/Sequential">tf.keras.Sequential</a>).</p>
+<p>La cellule ci-dessous montre la mise en oeuvre de la méthode <code>predict</code>, et comment exploiter la représentation  <em>one-hot</em> renvoyée par <code>fit</code> en utilisant la méthode <code>argmax</code> des tableaux de numpy :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">utils.tools</span> <span class="kn">import</span> <span class="n">plot_images</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="mi">100</span>   <span class="c1"># numéro image de test</span>
+<span class="n">rep</span> <span class="o">=</span> <span class="n">net_conv</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># Attention: x doit être un tableau de matrices...</span>
+                                   <span class="c1"># =&gt; x[i] ne convient pas !</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sortie du réseau pour l&#39;image de rang </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> :</span><span class="se">\n</span><span class="si">{</span><span class="n">rep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># limiter l&#39;affichage des composantes des tableaux numpy à 1 chiffre :    </span>
+<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">printoptions</span><span class="p">(</span><span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;float&#39;</span><span class="p">:</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">}):</span>    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">sortie réseau arrondie à 2 chiffre : </span><span class="si">{</span><span class="n">rep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rep[0].argmax() donne : </span><span class="si">{</span><span class="n">rep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">La bonne réponse est </span><span class="si">{</span><span class="n">lab_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> soit en &#39;one-hot&#39; : </span><span class="si">{</span><span class="n">y_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plot_images</span><span class="p">(</span><span class="n">im_test</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Utilit&#233;-de-la-m&#233;thode-numpy-ndarray.argmax-pour-d&#233;coder-le-tableau-de-vecteurs-one-hot-renvoy&#233;-par-la-m&#233;thode-predict">Utilit&#233; de la m&#233;thode numpy <code>ndarray.argmax</code> pour d&#233;coder le tableau de vecteurs <em>one-hot</em> renvoy&#233; par la m&#233;thode <code>predict</code><a class="anchor-link" href="#Utilit&#233;-de-la-m&#233;thode-numpy-ndarray.argmax-pour-d&#233;coder-le-tableau-de-vecteurs-one-hot-renvoy&#233;-par-la-m&#233;thode-predict">&#182;</a></h4></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Quand on calcule la prédiction du réseau <code>net_conv</code> avec les données de test par exemple, on obtient un résultat qui est un tableau de vecteurs codés <em>one-hot</em>, comme le détaille la cellue suivante :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">net_conv</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;forme du tableau &#39;results&#39;:&quot;</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;allure des vecteurs du tableau &#39;result&#39;, par exemple :&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">printoptions</span><span class="p">(</span><span class="n">formatter</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;float&#39;</span><span class="p">:</span><span class="s1">&#39;</span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">}):</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;results[0]  :&quot;</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;results[-1] :&quot;</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>En écrivant <code>results.argmax(axe=-1)</code>, on obtient le tableau des <code>argmax</code> de chaque vecteur -&gt; c'est directement le tableau des chiffres reconnus par le réseau :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chiffres_reconnus</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;chiffres_reconnus -&gt; shape:&quot;</span><span class="p">,</span> <span class="n">chiffres_reconnus</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;, dtype:&quot;</span><span class="p">,</span> <span class="n">chiffres_reconnus</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contenu de chiffres_reconnus : </span><span class="si">{</span><span class="n">chiffres_reconnus</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>En déduire le taux de réussite du réseau entrainé en calculant la prédiction du réseau sur les données de test <code>x_test</code> et en les comparant aux labels <code>lab_test</code> :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">net_conv</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">chiffres_reconnus</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">success</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">res</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chiffres_reconnus</span><span class="p">):</span>
+    <span class="n">success</span> <span class="o">+=</span> <span class="p">(</span><span class="n">res</span> <span class="o">==</span> <span class="n">lab_test</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;taux de réussite : </span><span class="si">{</span><span class="n">success</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Afficher-la-matrice-de-confusion">Afficher la matrice de confusion<a class="anchor-link" href="#Afficher-la-matrice-de-confusion">&#182;</a></h3></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>La cellule suivante définie la fonction <code>show_cm_mnist</code> qui affiche la <strong>matrice de confusion</strong>.</p>
+<p>La matrice de confusion permet de visualiser :</p>
+<ul>
+<li>sur la diagonale : les bonnes réponses du réseau, avec dans chaque case le nombre de bonnes réponses</li>
+<li>hors diagonale : les erreurs du réseau, avec dans chaque case la fréquence d'apparition de l'erreur.</li>
+</ul></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">seaborn</span> <span class="kn">import</span> <span class="n">heatmap</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+<span class="k">def</span> <span class="nf">show_cm_mnist</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">classes</span><span class="p">):</span>
+    <span class="c1"># target : the actual labels</span>
+    <span class="c1"># results : the labels computed by the trained network (one-hot format)</span>
+    <span class="c1"># classes : list of possible label values</span>
+    <span class="n">predicted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># tableau d&#39;entiers entre 0 et 9 </span>
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">predicted</span><span class="p">)</span>
+    <span class="n">df_cm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+    <span class="n">heatmap</span><span class="p">(</span><span class="n">df_cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Faire afficher la matrice de confusion en lui passant les labels attendus <code>lab_test</code> et les labels calculés par le model :</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Effectivement, il y a assez peu d'erreurs hors diagonale.</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="D/-Bonus">D/ Bonus<a class="anchor-link" href="#D/-Bonus">&#182;</a></h1></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Faire-reconna&#238;tre-des-images-originales-&#224;-un-r&#233;seau-entra&#238;n&#233;-avec-les-images-MNIST">Faire reconna&#238;tre des images originales &#224; un r&#233;seau entra&#238;n&#233; avec les images MNIST<a class="anchor-link" href="#Faire-reconna&#238;tre-des-images-originales-&#224;-un-r&#233;seau-entra&#238;n&#233;-avec-les-images-MNIST">&#182;</a></h2></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Plusieurs possibilités :</p>
+<ul>
+<li>utiliser des images crées pour l'occasion... </li>
+<li>utiliser les images toutes prêtes du répertoire <code>chiffres</code>.</li>
+</ul>
+<p>Si tu crées tes propres images de chiffres écrits à la main, il faut :</p>
+<ul>
+<li>les mettre au format MNIST (20x28 pixels en ton de gris, chiffre centré dans l'image) </li>
+<li>les placer dans un répertoire spécifique ,</li>
+<li>affecter ce nom de ce répertoire à <code>images_dir</code> dans la cellule ci-dessous :</li>
+</ul></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># changer le nom du répertoire au besoin :</span>
+<span class="n">images_dir</span> <span class="o">=</span> <span class="s2">&quot;chiffres&quot;</span>
+
+<span class="n">images</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">images_dir</span><span class="p">,</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">images_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.png&quot;</span><span class="p">)]</span>
+<span class="n">images</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Images du dossier &lt;</span><span class="si">{</span><span class="n">images_dir</span><span class="si">}</span><span class="s2">&gt; à reconnaître :&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">im</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Lecture-des-fichiers-image-avec-openCV">Lecture des fichiers image avec openCV<a class="anchor-link" href="#Lecture-des-fichiers-image-avec-openCV">&#182;</a></h3></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Les images doivent être convertie en image en ton de gris de 28 x 28 pixels pour pouvoir être traitées par le réseau entraîné sur les images MNIST.</p>
+<p>Plusieurs fonctions du module OpenCV pourront être utilisées :</p>
+<ul>
+<li><code>cv2.imread(file_name)</code> : pour lire un fichier image aux formats standards (PNG, JPG,...)</li>
+<li><code>cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</code> : pour convertir le tableau <code>img</code> renvoyé par <code>cv2.imread</code> en tons de gris</li>
+<li><code>cv2.resize</code> : pour retailler l'image.</li>
+</ul>
+<p>La cellule ci-dessous montre un exemple de lecture et traitement avec OpenCV des images du dossier <code>chiffres</code> qui sont déjà au format 28 x 28 pixe :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="n">my_images</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">image_path</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>                    <span class="c1"># lecture fichier image</span>
+    <span class="n">img_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span> <span class="c1"># conversion en tons de gris</span>
+    <span class="n">my_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_gray</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Visualisation des images lues :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_images</span><span class="p">(</span><span class="n">my_images</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Inversion des images pour avoir des chiffres doivent être en blanc sur fond noir :</p></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">my_images</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span> <span class="o">-</span> <span class="n">im</span> <span class="k">for</span> <span class="n">im</span> <span class="ow">in</span> <span class="n">my_images</span><span class="p">]</span>
+<span class="n">plot_images</span><span class="p">(</span><span class="n">my_images</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div></div></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On peut maintenant :</p>
+<ul>
+<li>transformer des matrices 28x28 en vecteurs de float normalisés,</li>
+<li>calculer la prédiction du réseau entaîné de votre choix (<code>model</code> ou autre...) avec les images perso en entrée,</li>
+<li>faire afficher la précision obtenue et la matric de confusion.</li>
+</ul></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Que suggèrent les  résultats ?</p></div></div></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Autres-ressources-int&#233;ressantes...-des-vid&#233;os-:">Autres ressources int&#233;ressantes... des vid&#233;os :<a class="anchor-link" href="#Autres-ressources-int&#233;ressantes...-des-vid&#233;os-:">&#182;</a></h1></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">HTML</span>
+&lt;iframe src=&quot;https://www.youtube.com/embed/trWrEWfhTVg&quot; width=&quot;800&quot; height=&quot;450&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;
+</pre></div></div></div></div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<iframe src="https://www.youtube.com/embed/trWrEWfhTVg" width="800" height="450" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">HTML</span>
+&lt;iframe src=&quot;https://www.youtube.com/embed/aircAruvnKk&quot; width=&quot;800&quot; height=&quot;450&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;
+</pre></div></div></div></div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<iframe src="https://www.youtube.com/embed/aircAruvnKk" width="800" height="450" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">HTML</span>
+&lt;iframe src=&quot;https://www.youtube.com/embed/IHZwWFHWa-w&quot; width=&quot;800&quot; height=&quot;450&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;
+</pre></div></div></div></div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<iframe src="https://www.youtube.com/embed/IHZwWFHWa-w" width="800" height="450" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div></div></div></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell"
+  
+>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">HTML</span>
+&lt;iframe src=&quot;https://www.youtube.com/embed/Ilg3gGewQ5U&quot; width=&quot;800&quot; height=&quot;450&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;
+</pre></div></div></div></div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<iframe src="https://www.youtube.com/embed/Ilg3gGewQ5U" width="800" height="450" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div></div></div></div>
+

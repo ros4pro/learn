@@ -1,0 +1,51 @@
+%
+% CC BY-SA 4.0  / 2019-06-29 Jean-Luc Charles / Jean-luc.charles@ensam.eu
+%
+\documentclass[border=0.125cm]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning,decorations.pathreplacing,arrows}
+\begin{document}
+
+\tikzset{%
+  neuron/.style={
+    circle,
+    draw,
+    minimum size=1cm
+  },
+  squa/.style={
+    draw,
+    inner sep=2pt,
+    font=\Large,
+    join = by -latex
+  },
+}
+
+\begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
+
+  \node [label=above:\parbox{2cm}{\centering Input\\stimuli}] at (0, 1.5) (x1)  {$x_1$};
+  \node [] at (0, 0.5) (x2) {$x_2$};
+  \node [] at (0, -0) (vdots) {$\vdots$};
+  \node [] at (0, -0.7) (xn) {$x_n$};
+  \node [label=above:\parbox{2cm}{\centering Bias}] at (2, 1.8) (bias) {$-1$};
+  \node [squa, label=above:{\parbox{2cm}{\centering Activation\\function}}] at (4.4, 0.15) (F) {$f$};
+  \node [label=above:\parbox{2cm}{\centering Output}] at (6, 0.15) (y) {$y = f(\sum_i{w_{i}\,x_i} - b)$};
+  
+  \node [neuron/.try] (output) at (2,0.15) {\Huge{$\displaystyle\Sigma$}};
+  
+  \draw [o-latex] (x1) -- (output);
+  \draw [o-latex] (x2) -- (output);
+  \draw [o-latex] (xn) -- (output);
+  \draw [o-latex] (bias) -- (output);
+  \draw [->] (output) -- (F);
+  \draw [->] (F) -- (y);
+
+  \node [] at (2.2,1) () {$b$} ;
+  \node [] at (1,1) () {$w_1$} ;
+  \node [] at (1,.5) () {$w_2$} ;
+  \node [] at (1, -0.45) () {$w_n$} ;
+  \node [] at (3.2, 0.3) () {$\sum_i{w_{i}\,x_i} - b$};
+
+
+\end{tikzpicture}
+
+\end{document}

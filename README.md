@@ -28,10 +28,12 @@ firefox http://localhost:8000
 
 ### USE jupyter compilation
 
-1. Install nbinteract (0.1.7)
+I use pyenv with python 3.7.2
+
+1. Install nbinteract (0.1.7) and other dependencies
 
 ```bash
-pip install nbinteract==0.1.7
+pip install nbinteract==0.1.7 nbconvert==5.3.1 tornado==4.2
 ```
 
 2. Put your jupyter notebook in the textbook folder

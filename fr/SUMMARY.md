@@ -10,8 +10,8 @@
     * [Sawyer](manipulation/sawyer/README.md)
     * [Universal Robot](manipulation/ur/README.md)
 * IV. Perception
-  * [Keras](perception/keras/README.md)
-  * [Torch](perception/pytorch/README.md)
+  * [TP1](perception/TP1/README.md)
+  * [TP2](perception/TP2/README.md)
 * V. Intégration
   * [Poppy Ergo Jr + Turtlebot + Keras](integration/ergo-tb-keras/README.md)
   * [Sawyer + Turtlebot + Keras](integration/sawyer-tb-keras/README.md)
