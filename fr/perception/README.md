@@ -32,3 +32,7 @@ En cas de blocage pour compléter les notebook 'à trous', le répertoire `solut
 - matrice de confusion,
 - utilisation d'un `callback` tensorflow `Early Stopping` pour éviter le sur-entraînement.
 - exploitation des réseaux avec des chiffres manuscrits hors banque MNIST.
+
+
+Vous trouverez l'ensemble du code sur le github suivant :
+https://github.com/cjlux/mnist_tf2

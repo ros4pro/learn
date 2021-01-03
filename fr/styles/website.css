@@ -37,6 +37,7 @@
   font-weight: 700;
   margin-bottom: 1.2em;
   padding: 0.4em 1em;
+  display : none;
 }
 
 .js-nbinteract-widget:disabled,
@@ -132,4 +133,19 @@ blockquote p {
 
 .bp {
   color: #f76565;
+}
+
+.button-download {
+  background-color: #477dca;
+  color: #fff;
+  display: inline-block;
+  font-size: 1.1em;
+  font-weight: 700;
+  margin-bottom: 1.2em;
+  padding: 0.4em 1em;
+  text-decoration: none;
+}
+
+.button-download a {
+  color: #fff !important;
 }

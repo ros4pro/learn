@@ -10,6 +10,7 @@
     * [Sawyer](manipulation/sawyer/README.md)
     * [Universal Robot](manipulation/ur/README.md)
 * IV. Perception
+  * [Introduction](perception/README.md)
   * [TP1](perception/TP1/README.md)
   * [TP2](perception/TP2/README.md)
 * V. Intégration
