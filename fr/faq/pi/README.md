@@ -21,7 +21,7 @@ Optionnellement, en cas de besoin de restaurer les robots avec les images d'usin
 
 1. Insérer la carde SD du robot en question dans votre poste de travail (pas dans votre robot) et ouvrir la partition nommée `boot`
 
-2. Télécharger le fichier [wpa_supplicant.conf](files/wpa_supplicant.conf) dans `boot` et modifiez-le pour renseigner le bon mot de passe wifi à l'intérieur (sans changer le nom de fichier). Respectez la casse : majuscules/minuscules.
+2. Télécharger le fichier [wpa_supplicant.conf](https://files.ros4.pro/wpa_supplicant.conf) dans `boot` et modifiez-le pour renseigner le bon mot de passe wifi à l'intérieur (sans changer le nom de fichier). Respectez la casse : majuscules/minuscules.
 
 2. Créer un fichier vide nommé `ssh` au même endroit dans `boot` (par exemple avec la commande `touch ssh` dans le dossier courant)
 
