@@ -23,7 +23,7 @@ La robotique de manipulation regroupe la manipulation d'objets avec des robots. 
 🔧 Pour assembler votre robot, veuillez suivre [le guide d'assemblage](https://docs.poppy-project.org/fr/assembly-guides/ergo-jr/), en suivant les étapes faîtes pour ROS le cas échéant ; et en comparant minutieusement chaque pièce aux photos pour vérifier leur orientation car il est très facile d'assembler ce robot à l'envers même s'il a au final la même allure. Si votre robot est pré-assemblé, recommencez à minima toutes les configurations des moteurs qui pourraient être incorrectes.
 
 ✅ **Vérification :** Pour vérifier que votre assemblage est correct, connectez-vous en SSH au robot (si ce n'est pas déjà fait) puis exécutez :
-```
+```bash
 ssh pi@poppy.local      # password raspberrypi
 # Effacer éventuellement l'ancienne clé ECDSA si vous avez un message d'erreur
 roslaunch poppy_controllers control.launch
@@ -42,12 +42,12 @@ Un robot intégré à ROS est composé d'au minimum :
 #### 2.1.1. Comprendre le descripteur URDF
 
 💻📀 Clonez le package ROS Poppy Ergo Jr Description sur votre PC, il contient le fichier de description URDF du robot :
-```
+```bash
 git clone https://github.com/poppy-project/poppy_ergo_jr_description.git
 ```
 
 💻 Compilez votre workspace puis sourcez votre `.bashrc`, enfin rdv dans le dossier `urdf` de ce package, puis exécutez la commande `urdf_to_graphiz` qui convertit un fichier URDF en représentation graphique dans un PDF :
-```
+```bash
 sudo apt install liburdfdom-tools
 roscd poppy_ergo_jr_description/urdf
 urdf_to_graphiz poppy_ergo_jr.urdf
@@ -64,14 +64,14 @@ Ouvrez le PDF obtenu puis déterminez :
 
 🤖 Le contrôleur se trouve déjà sur le robot. Vous pouvez directement vous connecter au robot et le démarrer :
 
-```
+```bash
 ssh pi@poppy.local      # password raspberrypi
 # Effacer éventuellement l'ancienne clé ECDSA si vous avez un message d'erreur
 roslaunch poppy_controllers control.launch
 ```
 
 💻 Sur votre PC, faîtes pointer votre `ROS_MASTER_URI` sur `poppy.local`. Rappel :
-```
+```bash
 nano ~/.bashrc      # Pour changer votre ROS_MASTER_URI
 source ~/.bashrc    # Pour charger votre .bashrc et donc le nouveau master
 ```
@@ -98,8 +98,8 @@ Mettez votre robot en mode compliant, démarrez `rqt_plot` pour tracer les posit
 ### 2.2. Cinématique, et planification avec MoveIt dans RViz
 #### 2.2.1. Démarrer avec MoveIt
 💻📀 Installez MoveIt puis clonez le package ROS **Poppy Ergo Jr MoveIt Configuration**, il contient le code nécessaire pour que ce robot fonctionne avec MoveIt :
-```
-sudo apt install ros-melodic-moveit
+```bash
+sudo apt install ros-noetic-moveit
 git clone https://github.com/poppy-project/poppy_ergo_jr_moveit_config.git
 ```
 
@@ -144,16 +144,16 @@ Nous allons visualiser et interroger l'arbre des transformations nommé `tf`
 ### 2.3. Ecrire un noeud Python ROS pour l'Ergo Jr
 #### 2.3.1. Créer un nouveau package et un nouveau noeud Python
 💻 Nous allons créer un nouveau package ROS nommé **ros4pro_custom** sur votre laptop de développement, qui contient notre code:
-```
+```bash
 cd ~/catkin_ws/src
-catkin_create_pkg ros4pro_custom          # Cette commande créé le package
+catkin_create_pkg ros4pro_custom             # Cette commande créé le package
 mkdir -p ros4pro_custom/src                  # On créé un dossier src dans le package
 touch ros4pro_custom/src/manipulate.py       # On créé un noeud Python "manipulate.py"
 chmod +x ros4pro_custom/src/manipulate.py    # On rend ce noeud exécutable pour pouvoir le lancer avec rosrun
 ```
 
 💻🐍 Bien que vous devriez avoir compris comment créer un noeud ROS en Python dans les tutoriels d'introduction, voici un rappel de noeud ROS minimal qui boucle toutes les secondes en Python :
-```
+```python
 #!/usr/bin/env python
 
 import rospy
@@ -168,7 +168,7 @@ while not rospy.is_shutdown():
 
 
 💻 Compilez votre workspace puis sourcez votre `.bashrc`. Exécutez votre noeud avec rosrun :
-```
+```bash
 cd ~/ros_ws
 catkin_make
 rosrun ros4pro_custom manipulate.py
@@ -182,7 +182,7 @@ Le `MoveGroupCommander` est le commandeur de robot de MoveIt, il suffit de lui i
 
 ##### 2.3.2.a. 🐍 Cible dans l'espace cartésien
 
-```
+```python
 from moveit_commander.move_group import MoveGroupCommander
 commander = MoveGroupCommander("arm_and_finger")
 commander.set_pose_target([0.00, 0.079, 0.220] + [0.871, -0.014, 0.079, 0.484])
@@ -195,7 +195,7 @@ Les coordonnées cartésiennes de la cible sont les coordonnées de l'effecteur 
 
 Il est également possible de définir une cible dans l'espace des joints en fournissant une liste des 6 angles moteurs  dans ce cas il n'y a pas d'évitement de collision:
 
-```
+```python
 commander.set_joint_value_target([0, 0, 0, 0, 0, 0])
 commander.go()
 ```
@@ -212,7 +212,7 @@ Afin que les algorithmes de planification de trajectoire d'OMPL (tels que `RRTCo
 
 🐍 Par exemple, ce code déclarer une boite de céréales comme objet de collision en spécifiant sa position et son orientation sous forme d'objet `PosteStamped` ainsi que sa taille en mètres :
 
-```
+```python
 from geometry_msgs.msg import PoseStamped
 from moveit_commander.planning_scene_interface import PlanningSceneInterface
 
@@ -245,7 +245,7 @@ Référez-vous à la documentation du [Poppy Controllers](https://github.com/pop
 
 💻📀 Avec la carte SD ROS, l'image de la caméra est accessible par appel d'un service dédié. Nous aurons besoin de récupérer le package Poppy Controllers et le compiler d'abord :
 
-```
+```bash
 cd ~/ros_ws/src
 git clone https://github.com/poppy-project/poppy_controllers.git    # Nous aurons besoin de ce package
 cd ~/ros_ws/
@@ -255,7 +255,7 @@ source ~/.bashrc
 
 🐍 Testez ce code pour vérifier que vous pouvez récupérer l'image en Python via le service ROS `/get_image` fourni par le contrôleur.
 
-```
+```python
 import cv2
 from poppy_controllers.srv import GetImage
 from cv_bridge import CvBridge
