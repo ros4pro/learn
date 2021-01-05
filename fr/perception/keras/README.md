@@ -39,7 +39,7 @@ Enfin, pour la partie reconnaissance, nous utilsons le `keras` inclus dans le mo
 
 Deux  étapes sont proposées pour une prise en main progressive de la partie *Machine Learning* (*ML*):
 
-### 2.1 Travail préliminaire avec les notebooks
+### 2.0 Travail préliminaire avec les notebooks
 
 En tapant la commande `jupyter notebook` depuis le dossier `ros4pro_perception` vous pouvez charger les deux notebooks *à trous* pour la prise en main du *machine learning* avec `tensorflow-keras` :
 
@@ -51,7 +51,7 @@ Une fois familiarisé avec les principes de construction des réseaux denses et 
 
 ### 2.1 Chargement des données
 
-Ouvrir le fichier `src/learning.py`, prendre connaissance du code, puis lancer programme.
+Ouvrir le fichier `src/learning.py`, prendre connaissance du code, puis lancer le programme.
 
 Avant d'appuyer sur entrée, répondre aux questions suivantes :
 
