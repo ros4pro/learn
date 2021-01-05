@@ -1,6 +1,6 @@
-# 📥 Créer et utiliser un Environnement Virtuel Python (EVP)
+# :hammer: Créer et utiliser un Environnement Virtuel Python (EVP)
 
-## a) Intérêt
+## Intérêt
 
 Un Environnement Virtuel Python (EVP) procure un environnement informatique étanche contenant une installation de Python :
 
@@ -13,7 +13,7 @@ On peut effacer et re-créer un EVP très facilement, sans que cela n'impacte la
 
 Quand tu actives un EVP sous Linux, la variable d’environnement PATH est modifiée de sorte que l’interpréteur Python et tous les modules soient recherchés dans l’arborescence dédiée à cet EVP et nulle part ailleurs.
 
-## b) Créer un EVP
+## Créer un EVP avec `conda`
 
 Plusieurs outils permettent de créer EVP, en particulier  :
 
@@ -22,16 +22,16 @@ Plusieurs outils permettent de créer EVP, en particulier  :
 
 L'intérêt de `miniconda` pour le calcul numérique est que cette distribution installe de façon transparente la bibliothèque [MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html), qui fournit l'optimisation pour les processeurs Intel des bibliothèques d'algèbre linéaire (BLAS, Lapack...) à la base des performances du module numpy.
 
-## c) Étapes de création d'un EVP avec `conda`
+## Étapes de création d'un EVP avec `conda`
 
 1. Télécharge et installe la distribution [miniconda](https://docs.conda.io/en/latest/miniconda.html) ...
 
     * La seule précaution est d'installer le répertoire d'installation `miniconda3` dans un chemin qui ne comporte ni espace ni caractère accentué.
     * En général, le chemin ressemble à `/home/<logname>/miniconda3/`.
-    * À la fin de l'installation réponds `yes` à la question `Do you wish the installer to initialize Miniconda3 by running conda init? [yes|no]` 
-    * Lance un nouveau terminal ou tape la commande `source ~/.bashrc ` pour hériter des modifications du fichier `.bashrc`.
+    * À la fin de l'installation réponds `yes` à la question `Do you wish the installer to initialize Miniconda3 by running conda init? [yes|no]`
+    * Lance un nouveau terminal ou tape la commande `source ~/.bashrc` pour hériter des modifications du fichier `.bashrc`.
     * Une fois `conda` installé, désactive le lancement automatique de l'EVP `(base)` en tapant la commande : `conda config --set auto_activate_base false`.
-    
+
 1. Créé l'EVP avec la commande `conda create -n <nom_evp> python=<version>`
 
     * `<nom_environnement>` : nom (libre) de ton EVP : par exemple `pyml`(pour Python mechine learning)
@@ -44,13 +44,14 @@ L'intérêt de `miniconda` pour le calcul numérique est que cette distribution 
 
 1. Charge les modules Python dans ton EVP **activé**
 
-    Avec ton **EVP activé** utilise `conda install <module>`  ou `pip install <module>` pour installer le module Python  `<module>`.<br>
-    "`conda install...`" ou "`pip install...`" ?` -->  la règle est simple :
+    Avec ton **EVP activé** utilise `conda install <module>`  ou `pip install <module>` pour installer le module Python  `<module>`.
 
-    * commencer de préférence par "`conda install...`", qui va installer une version optimisée du module Python si elle est connue de `conda`
-    * si "`conda install...`" échoue, installe le module avec "`pip install...`"
+    :question: `conda install...` ou `pip install...` :arrow_right: la règle est simple :
 
-## d) Utiliser un EVP
+    * commence de préférence par `conda install...`, qui va installer une version optimisée du module Python si elle est connue de `conda`
+    * si `conda install...` échoue, utilise alors `pip install...`"
+
+# :hammer: Comment fonctionne un EVP
 
 Quand l'EVP `<evp>` est activé :
 
@@ -60,8 +61,17 @@ Quand l'EVP `<evp>` est activé :
 * toutes les commandes liées à Python (`python`, `conda`, `pip`...) sont recherchées en premier dans ces deux répertoires.
 * toute installation d'un module Python par `conda` ou `pip` installe le module dans le l'arboresence `/hoem/<logname>/envs/<evp>/...`
 
- 
-# 📥 EVP : commandes utiles 
+# :hammer: Quels modules installer dans mon EVP pour l'entraînement des réseaux de neurones?
+
+La journée **Perception** du workshop ROS nécessite de travailler avec les modules **tensorflow** et **keras** :
+l'idéal est de les installer dans ton **EVP activé** avec les commandes suivantes :
+
+* conda install numpy==1.19.4 scipy==1.5.2
+* pip install tensorflow==2.4.0
+* pip install opencv-python==4.5.1.48
+* pip install matplotlib pandas jupyter testresources sklearn scikit-image seaborn pydot
+
+# :high_brightness: EVP : commandes utiles
 
 * Afficher des informations sur la distribution **conda** : `conda info`
 
@@ -72,21 +82,13 @@ Quand l'EVP `<evp>` est activé :
 * Activer l'EVP nommé `<evp>` : `conda activate <evp>`
 
 * Avec ton **EVP activé** :
+
     * Lister les paquets installés : `conda list` ou `pip freeze`
 
-    * Rechercher les versions d'un module Python pour l'EVP courant activé:<br>
-`conda search <module>` : cherche les version de `<module>` connues par conda 
-`pip search <module>` : cherche les versions de `<module>` disponibles pour ton EVP sur le site `pypi`.
+    * Rechercher les versions d'un module Python pour l'EVP courant activé:
+
+        * `conda search <module>` : cherche les versions de `<module>` connues par conda
+        * `pip search <module>` : cherche les versions de `<module>` disponibles pour ton EVP sur le site `pypi`.
 
 * Mettre à jour la commande **conda** : `conda update -n base -c defaults conda`
 
- 
-# 📥 Quels modules installer dans mon EVP pour l'entraînement des réseaux de neurones?
-
-La journée **Perception** du workshop ROS nécessite de travailler avec les modules **tensorflow** et **keras** :
-l'idéal est de le faire dans ton **EVP activé** avec les commandes suivantes :
-
-* conda install numpy==1.19.4 scipy==1.5.2
-* pip install tensorflow==2.4.0
-* pip install opencv-python==4.5.1.48
-* pip install matplotlib pandas jupyter testresources sklearn scikit-image seaborn pydot
