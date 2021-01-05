@@ -26,16 +26,25 @@
 [![Vidéo d'assemblage](https://img.youtube.com/vi/rvm-m2ogrLA/0.jpg)](https://www.youtube.com/watch?v=rvm-m2ogrLA)
 
 ### 2. Bringup du TB3 (avec un robot réel)
-🔍 Vérifiez d'abord la configuration réseau de ROS sur votre PC et sur le TB3 : *ROS_MASTER_URI* doit pointer vers le Turtlebot. Vérifiez également que vous avez connecté le robot au Wifi et renommé votre robot en y ajoutant votre numéro de groupe (par ex `burger8`) avec les [instructions](1_INTRODUCTION.md#4-faq-robots) de l'introduction.
+📀 Si ce n'est déjà fait, récupérez le metapackage `turtlebot3` sur votre poste de travail et compilez :
+```bash
+cd ~/catkin_ws/src
+git clone https://github.com/ros4pro/turtlebot3/
+git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+cd ~/catkin_ws && catkin_make
+source ~/.bashrc
+```
+
+🔍 Vérifiez d'abord la configuration réseau de ROS sur votre PC et sur le TB3 : *ROS_MASTER_URI* doit pointer vers le Turtlebot. Vérifiez également que vous avez connecté le robot au Wifi avec les [instructions](../../introduction/README.md) de l'introduction. Si vous partagez le Wifi avec d'autres groupes, vérifiez aussi que vous avez renommé votre robot en y ajoutant votre numéro de groupe (par ex `burger8`).
 
 💻 Lancez `roscore` dans un premier terminal. 
 
-🤖 Sur le TB3 lancer la commande `roslaunch turtlebot3_bringup turtlebot3_robot.launch`.
+🤖 En ssh sur le TB3 lancez la commande `roslaunch turtlebot3_bringup turtlebot3_robot.launch`.
 S'il n'y a aucune erreur vous êtes prêt à piloter le robot depuis votre poste de travail, que ce soit pour la téléopération, la cartographie ou la navigation autonome.
 
 ### 2.bis. Bringup du Turtlebot (en simulation)
 
-⚠️ **Attention** la simulation du TB3 n'est a utiliser qu'en dernier recours pour remplacer votre robot s'il ne fonctionne pas. Avant de passer en simulation demandez de l'aide pour réparer votre robot.
+⚠️ **Attention** la simulation du TB3 n'est à utiliser qu'en dernier recours pour remplacer votre robot s'il ne fonctionne pas. Avant de passer en simulation demandez de l'aide pour réparer votre robot.
 
 📥 Vous devez télécharger et installer le paquet ROS de simulation du TB3 :
 * 💻 Lancez `cd ~/catkin_ws/src` dans un terminal pour vous déplacer dans le dossier contenant les sources de vos paquets ROS.
@@ -56,7 +65,7 @@ Plusieurs environnements de simulation sont disponibles :
 * `turtlebot3_stage_4.launch` : le TB3 est dans une grande arène carrée avec plusieurs obstacles et des murs.
 
 ### 3. Téléopération
-🎮 La première étape consiste à vérifier que votre poste de travail peut effectivement prendre le contrôle du Turtlebot, en le téléopérant via les touches du clavier.
+🎮 La première étape pour piloter votre robot consiste à vérifier que votre poste de travail peut effectivement prendre le contrôle du Turtlebot, en le téléopérant via les touches du clavier.
 
 💻 Dans un nouveau terminal lancez la commande `roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch` et gardez le focus sur le terminal pour controler le robot avec le clavier grâce aux touches indiquées. Vérifiez que vous pouvez avancer, reculer, tourner à gauche et à droite. Vous pouvez tuer ce dernier avec Ctrl+C lorsque vous avez terminé.
 

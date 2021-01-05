@@ -21,4 +21,5 @@
     * [Gazebo](simulation/gazebo/README.md)
 * Foires aux Questions
   * [FAQ robots basés sur Raspberry Pi](faq/pi/README.md)
+  * [FAQ Python : environnement virtuel](faq/Python_venv/README.md)
 
