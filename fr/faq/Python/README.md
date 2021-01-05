@@ -1,6 +1,6 @@
-# :hammer: Créer et utiliser un Environnement Virtuel Python (EVP)
+## 🔨 Créer et utiliser un Environnement Virtuel Python (EVP)
 
-## Intérêt
+### Intérêt
 
 Un Environnement Virtuel Python (EVP) procure un environnement informatique étanche contenant une installation de Python :
 
@@ -13,7 +13,7 @@ On peut effacer et re-créer un EVP très facilement, sans que cela n'impacte la
 
 Quand tu actives un EVP sous Linux, la variable d’environnement PATH est modifiée de sorte que l’interpréteur Python et tous les modules soient recherchés dans l’arborescence dédiée à cet EVP et nulle part ailleurs.
 
-## Créer un EVP avec `conda`
+### Créer un EVP avec `conda`
 
 Plusieurs outils permettent de créer EVP, en particulier  :
 
@@ -22,7 +22,7 @@ Plusieurs outils permettent de créer EVP, en particulier  :
 
 L'intérêt de `miniconda` pour le calcul numérique est que cette distribution installe de façon transparente la bibliothèque [MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html), qui fournit l'optimisation pour les processeurs Intel des bibliothèques d'algèbre linéaire (BLAS, Lapack...) à la base des performances du module numpy.
 
-## Étapes de création d'un EVP avec `conda`
+### Étapes de création d'un EVP avec `conda`
 
 1. Télécharge et installe la distribution [miniconda](https://docs.conda.io/en/latest/miniconda.html) ...
 
@@ -51,7 +51,7 @@ L'intérêt de `miniconda` pour le calcul numérique est que cette distribution 
     * commence de préférence par `conda install...`, qui va installer une version optimisée du module Python si elle est connue de `conda`
     * si `conda install...` échoue, utilise alors `pip install...`"
 
-# :hammer: Comment fonctionne un EVP
+## 🔨 Comment fonctionne un EVP
 
 Quand l'EVP `<evp>` est activé :
 
@@ -61,7 +61,7 @@ Quand l'EVP `<evp>` est activé :
 * toutes les commandes liées à Python (`python`, `conda`, `pip`...) sont recherchées en premier dans ces deux répertoires.
 * toute installation d'un module Python par `conda` ou `pip` installe le module dans le l'arboresence `/hoem/<logname>/envs/<evp>/...`
 
-# :hammer: Quels modules installer dans mon EVP pour l'entraînement des réseaux de neurones?
+## 🔨 Quels modules Python  installer dans mon EVP pour l'entraînement des réseaux de neurones?
 
 La journée **Perception** du workshop ROS nécessite de travailler avec les modules **tensorflow** et **keras** :
 l'idéal est de les installer dans ton **EVP activé** avec les commandes suivantes :
@@ -71,7 +71,7 @@ l'idéal est de les installer dans ton **EVP activé** avec les commandes suivan
 * pip install opencv-python==4.5.1.48
 * pip install matplotlib pandas jupyter testresources sklearn scikit-image seaborn pydot
 
-# :high_brightness: EVP : commandes utiles
+## 🔨 EVP : commandes utiles
 
 * Afficher des informations sur la distribution **conda** : `conda info`
 
@@ -91,4 +91,3 @@ l'idéal est de les installer dans ton **EVP activé** avec les commandes suivan
         * `pip search <module>` : cherche les versions de `<module>` disponibles pour ton EVP sur le site `pypi`.
 
 * Mettre à jour la commande **conda** : `conda update -n base -c defaults conda`
-

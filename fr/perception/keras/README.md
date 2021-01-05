@@ -39,21 +39,19 @@ Enfin, pour la partie reconnaissance, nous utilsons le `keras` inclus dans le mo
 
 Deux  étapes sont proposées pour une prise en main progressive de la partie *Machine Learning* (*ML*):
 
-### a/ Travail de prise en main des **réseaux denses**, puis **convolutifs**
+### 2.1 Travail préliminaire avec les notebooks
 
-Deux notebooks *à trous* sont proposés pour la prise en main du *machine learning* avec `tensorflow-keras` :
+En tapant la commande `jupyter notebook` depuis le dossier `ros4pro_perception` vous pouvez charger les deux notebooks *à trous* pour la prise en main du *machine learning* avec `tensorflow-keras` :
 
-* `notebook/TP1_MNIST_dense.ipynb` : pour acquérir les bases sur le *machine learning*, la banque d'images MNIST utilisée pour l'entraînement des réseaux, et la construction d'un réseau de neurones dense, son entraînement et son exploition, conduisant à un taux de reconnaissance des images MNIST voisin de 98 %.
+* `notebook/TP1_MNIST_dense.ipynb` : utiliser ce notebook pour l'acquisition des bases sur le *machine learning*, la banque d'images MNIST utilisée pour l'entraînement des réseaux, et la construction d'un réseau de neurones dense, son entraînement et son exploition, conduisant à un taux de reconnaissance des images MNIST voisin de 98 %.
 
-* `notebook/TP2_MNIST_convol.ipynb` : pour la construction d'un réseau convolutif, son entraînement avc les images MNIST et son exploition, conduisant à un taux de reconnaissance voisin de 98 %.
+* `notebook/TP2_MNIST_convol.ipynb` : utiliser ensuite ce notebook pour la construction d'un réseau convolutif, son entraînement avc les images MNIST et son exploition, conduisant à un taux de reconnaissance voisin de 98 %.
 
-### b/ Mise en oeuvre avec des programmes Pythons
-
-Une fois familiarisé avec les principes de construction des réseaux denses et convolutifs abordés avec les notebooks des TP1 et TP2, vous pourrez aborder l'exploitation de vos acquis en ouvrant le fichier `src/learning.py`.
-
-Prendre connaissance du code, puis le lancer :
+Une fois familiarisé avec les principes de construction des réseaux denses et convolutifs à l'aide des dexu notebooks, vous pouvez aborder l'exploitation de vos acquis en utilisant les programmes Python du répertoire `src/`.
 
 ### 2.1 Chargement des données
+
+Ouvrir le fichier `src/learning.py`, prendre connaissance du code, puis lancer programme.
 
 Avant d'appuyer sur entrée, répondre aux questions suivantes :
 
