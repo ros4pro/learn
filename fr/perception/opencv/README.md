@@ -87,8 +87,8 @@ Nous sommes maintenant capable de sélectionner des pixels en fonction de leur c
     `imgret` est la même image que `img_seuil` `contours` est une liste contenant tous les contours trouvés `hierarchy` contient les informations sur la hiérarchie des contours (les contours à l'intérieur des contours)
 
 -   Sur une image "naturelle" (avec du bruit) les contours trouvés seront rarement parfaits. Il est possible de "filtrer" ces contours en ne considérant par exemple que ceux dons la surface est cohérente avec les objets recherchés (voir le [tutoriel](https://docs.opencv.org/3.4/dd/d49/tutorial_py_contour_features.html))
--   Parcourez la liste des contours et dessinez les contours dont la surface est comprise entre 2500 et 3500 On utilisera une boucle sur `contours`, la fonction `contourArea()` retournant la surface d'un contour, ainsi que la fonction de dessin `drawContours()` (dessinez sur l'image d'origine)
--   Une fois le contour du cube trouvé, nous pouvons chercher son centre avec la fonction `moments()` avec une fonction telle que :
+-   Parcourez la liste des contours et dessinez les contours dont la surface est comprise entre 2500 et 3700 On utilisera une boucle sur `contours`, la fonction `contourArea()` retournant la surface d'un contour, ainsi que la fonction de dessin `drawContours()` (dessinez sur l'image d'origine)
+-   Une fois le contour du cube trouvé, nous pouvons chercher son centre avec la fonction `moments()` avec une fonction telle que:
 
     ```python
     def trouver_centroid(cnt):
