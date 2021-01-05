@@ -8,7 +8,6 @@
     * [E.DO](manipulation/edo/README.md)
     * [Poppy Ergo Jr](manipulation/ergo-jr/README.md)
     * [Sawyer](manipulation/sawyer/README.md)
-    * [Universal Robot](manipulation/ur/README.md)
 * IV. Perception
   * [OpenCV](perception/opencv/README.md)
   * [Keras](perception/keras/README.md)
