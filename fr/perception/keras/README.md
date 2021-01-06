@@ -170,7 +170,7 @@ Vous pouvez passer maintenant à la **Partie Vision** qui permettra, une fois ac
 
 ## 3. Partie Vision
 
-Le but de la partie Vision est de traiter les images fournie par la caméra du robot :
+Le but de la partie Vision est de traiter les images fournies par la caméra du robot :
 
 ![212.png](img/212.png)
 
@@ -178,7 +178,7 @@ pour trouver les contours des cubes :
 
 ![212_contours.png](img/212_contours.png)
 
-et extraire les faces de façon produire des images compatibles MNIST :
+et en extraire des images compatibles MNIST :
 
 ![212_contours.png](img/2.png)
 
@@ -186,9 +186,10 @@ qui seront envoyées au réseau de neurone pour classification en '1 ou '2'...
 
 ### 3.1 Présentation des données
 
-Ouvrir le fichier `src/detection.py` et lancer le script. Une des images exemple issue de la caméra du robot devrait vous être présentée :
+Ouvrir le fichier `src/detection.py` et lancer le script. Une image exemple issue de la caméra du robot devrait vous être présentée :
 
 * Observer les valeurs de pixels ? Quelles sont les valeurs de pixels blancs et noirs ?
+
 * De manière générale, la face des cubes est elle semblable aux images MNIST ?
 
 ### 3.2 Binarisation de l'image
