@@ -202,8 +202,8 @@ commander.go()
 
 ##### 2.3.2.c. ✍ Mise en pratique
 
-* A l'aide des fonctions et commandes vues en 3.1.4. et 4.2.1., vérifiez que vous savez prendre les coordonnées cartésiennes courante et les définir comme cible puis l'atteindre
-* A l'aide des fonctions et commandes vues en 2.2.1. et 4.2.2., vérifiez que vous savez prendre les positions des joints courantes et les définir comme cible puis l'atteindre
+* A l'aide des fonctions et commandes vues en 2.2.4. et 2.3.2.a., vérifiez que vous savez prendre les coordonnées cartésiennes courante et les définir comme cible puis l'atteindre
+* A l'aide des fonctions et commandes vues en 2.1.2.a. et 2.3.2.b., vérifiez que vous savez prendre les positions des joints courantes et les définir comme cible puis l'atteindre
 * A l'aide du mode compliant, prendre les coordonnées cartésiennes de l'effecteur et et les positions des joints pour deux configurations différentes du robot A et B (e.g. effecteur vers le haut et effecteur vers le bas)
 * Faîtes bouger le robot infiniement entre les cibles cartésiennes A et B, nous y ajouterons des obstacles plus tard
 
