@@ -24,7 +24,7 @@ La robotique de manipulation regroupe la manipulation d'objets avec des robots. 
 
 ✅ **Vérification :** Pour vérifier que votre assemblage est correct, connectez-vous en SSH au robot (si ce n'est pas déjà fait) puis exécutez :
 ```bash
-ssh pi@poppy.local      # password raspberrypi
+ssh pi@poppy.local      # password raspberry
 # Effacer éventuellement l'ancienne clé ECDSA si vous avez un message d'erreur
 roslaunch poppy_controllers control.launch
 ```
