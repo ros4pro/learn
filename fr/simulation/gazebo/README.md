@@ -135,6 +135,7 @@ commander.stop() #force l'arrêt du mouvement pour plus de sécurité
 commander.clear_pose_targets() #force le nettoyage des objectifs du commander pour plus de sécurité
 ```
 
+Remarque, la méthode `commander.set_joint_value_target(pose)` semble trouver des solutions plus facilement avec des obstacles.
 Pour nous aider on peut créer un quaternion à partir d'une rotation au format Roll/Pitch/Yaw avec :
 
 ```python
@@ -153,6 +154,7 @@ q = transform.transformations.quaternion_from_euler(roll, pitch, yaw)
 -   Essayez d'attraper chacun des cubes
 -   Essayer d'empiler les cubes en -25° et +25° sur le cube en 0°
 
+![img](./imgs/ergo_jr_gazebo_grab.gif)
 
 #### 8.4. Ajouter des obstacles
 
