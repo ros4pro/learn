@@ -26,11 +26,21 @@
 [![Vidéo d'assemblage](https://img.youtube.com/vi/rvm-m2ogrLA/0.jpg)](https://www.youtube.com/watch?v=rvm-m2ogrLA)
 
 ### 2. Bringup du TB3 (avec un robot réel)
-📀 Si ce n'est déjà fait, récupérez le metapackage `turtlebot3` sur votre poste de travail et compilez :
+📀 Si ce n'est déjà fait, installez les dépendances, récupérez le metapackage `turtlebot3` sur votre poste de travail et compilez :
 ```bash
+sudo apt install ros-noetic-joy ros-noetic-teleop-twist-joy \
+  ros-noetic-teleop-twist-keyboard ros-noetic-laser-proc \
+  ros-noetic-rgbd-launch ros-noetic-rosserial-arduino \
+  ros-noetic-rosserial-python ros-noetic-rosserial-client \
+  ros-noetic-rosserial-msgs ros-noetic-amcl ros-noetic-map-server \
+  ros-noetic-move-base ros-noetic-urdf ros-noetic-xacro \
+  ros-noetic-compressed-image-transport ros-noetic-rqt-image-view \
+  ros-noetic-gmapping ros-noetic-navigation ros-noetic-interactive-markers
+
 cd ~/catkin_ws/src
 git clone https://github.com/ros4pro/turtlebot3/
 git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+git  clone https://github.com/ros4pro/ros4pro.git
 cd ~/catkin_ws && catkin_make
 source ~/.bashrc
 ```
