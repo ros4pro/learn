@@ -113,9 +113,10 @@ Plusieurs environnements de simulation sont disponibles :
 ### 6. Scenario de navigation
 🚗 L'objectif final du TP est de faire passer le robot par une suite de 4 ou 5 points de passage, comme pour une patrouille, avec un retour au point de départ. Si cela n'est pas déjà fait, choisissez plusieurs points de passage faciles à mesurer avec un mètre depuis le point de départ, avec un grand nombre d'obstacles sur le chemin. Si l'environnement a fortement changé, pensez à enregistrer une nouvelle carte.
 
-🐍 Les commandes pour naviguer jusqu'à chaque point de passage seront des instructions dans un fichier Python. Le noeud `simple_navigation_goals.py` auquel vous pourrez accéder en tapant `roscd ros4pro/src/` est une ébauche (assez complète) de script Python pour y parvenir.
+🐍 Les commandes pour naviguer jusqu'à chaque point de passage seront des instructions dans un fichier Python. Le noeud `navigation_scenario.py` auquel vous pourrez accéder en tapant `roscd ros4pro/src/nodes` est une ébauche de script Python pour y parvenir.
 
-🐍 Complétez ce fichier Python afin d'exécuter le scenario et ainsi effectuer la patrouille. Pour exécuter le scénario lancez la navigation en arrière plan comme indiqué dans **2.5 Navigation** puis lancez la commande `rosrun ros4pro simple_navigation_goals.py`.
+🐍 Complétez ce fichier Python afin d'exécuter le scenario et ainsi effectuer la patrouille. Pour exécuter le scénario lancez la navigation en arrière plan comme indiqué dans **2.5 Navigation** puis lancez la commande `rosrun ros4pro navigate_waypoints.py`.
+
 
 ## 🧳 Challenge additionnel : Carry my luggage
 Challenge inspiré de l'épreuve "Carry my luggage" de la RoboCup @Home.
