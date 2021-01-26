@@ -1,6 +1,6 @@
 # IV. Perception avec Keras
 
-**tensorflow** et **keras** sont deux modules Python qui permettent de construire des réseaux de neurones apprenants. Nous allons les utiliser ici sur des imagettes sur lesquelles sont inscrits des chiffres écrits manuellement au feutre avec différentes calligraphies. Le réseau de neurones que vous allez créer devra apprendre à déterminer quel chiffre est marqué, ce que l'on appelle **classifier**.
+**tensorflow** et **keras** sont deux modules Python qui permettent de construire des réseaux de neurones apprenants. Nous allons les utiliser pour entraîner un réseau de neurones à reconnaître des chiffres écrits manuellement au feutre avec différentes calligraphies, ce que l'on appelle aussi **classifier**.
 
 ## Prérequis
 
@@ -18,7 +18,7 @@
 Une fois téléchargé, vous devez installer les packages Python requis en tapant la commande suivante (depuis le dossier `ros4pro_perception`) :
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## 1. Documentation
@@ -34,7 +34,7 @@ Pour la partie détection des faces des cubes et pré-processing, nous utilisero
 
 * [Scikit-Image Documentation](https://scikit-image.org/docs/stable)
 
-Enfin, pour la partie reconnaissance, nous utilsons le `keras` inclus dans le module `tensorflow` depuis sa version 2. Un point d'entrée sur l'API Séquentielle peut être consulté sur cette page :
+Enfin, pour la partie reconnaissance, nous utilsons le module `keras` inclus dans le module `tensorflow` depuis sa version 2. Un point d'entrée sur l'API Séquentielle de keras peut être consulté sur cette page :
 
 * [keras API Sequential](https://www.tensorflow.org/guide/keras/sequential_model?hl=fr)
 
@@ -42,13 +42,13 @@ Enfin, pour la partie reconnaissance, nous utilsons le `keras` inclus dans le mo
 
 ### 2.0 Travail préliminaire avec les notebooks Jupyter 📒
 
-En tapant la commande `jupyter notebook` depuis le dossier `ros4pro_perception` vous pouvez charger les deux notebooks *à trous* pour la prise en main du *machine learning* avec **tensorflow-keras** :
+En tapant la commande `jupyter notebook` depuis le dossier `ros4pro_perception` vous pouvez charger les deux notebooks *à trous* pour la prise en main du *machine learning* avec **tensorflow** et **keras** :
 
-* `notebook/TP1_MNIST_dense.ipynb` : utiliser ce notebook pour l'acquisition des bases sur le *machine learning*, la banque d'images MNIST utilisée pour l'entraînement des réseaux, et la construction d'un réseau de neurones dense, son entraînement et son exploition, conduisant à un taux de reconnaissance des images MNIST voisin de 98 %.
+* `notebook/TP1_MNIST_dense.ipynb` : utiliser ce notebook pour l'acquisition des bases sur le *machine learning*, la banque d'images MNIST utilisée pour l'entraînement des réseaux, et la construction d'un réseau de neurones dense, son entraînement et son exploitation, conduisant à un taux de reconnaissance des images MNIST voisin de 98 %.
 
-* `notebook/TP2_MNIST_convol.ipynb` : utiliser ensuite ce notebook pour la construction d'un réseau convolutif, son entraînement avc les images MNIST et son exploition, conduisant à un taux de reconnaissance voisin de 98 %.
+* `notebook/TP2_MNIST_convol.ipynb` : utiliser ensuite ce notebook pour la construction d'un réseau convolutif, son entraînement avec les images MNIST et son exploitation, conduisant à un taux de reconnaissance voisin de 99 %.
 
-Une fois familiarisé avec les principes de construction des réseaux denses et convolutifs, vous pouvez aborder l'exploitation de vos acquis en utilisant les programmes Python du répertoire `src/`.
+Une fois familiarisé avec les principes de construction des réseaux denses et convolutifs, vous pouvez utiliser les programmes Python du répertoire `src/`.
 
 ### 2.1  Chargement des images MNIST
 
@@ -88,9 +88,9 @@ Appuyer à nouveau sur entrée et observer les images:
 
 ### 2.5 Le modèle du réseau convolutif
 
-Arrêter le script. Dans le fichier source `learning.py` modifier la fonction `build_model` pour implémenter le réseau convolutif *LeNet* vu dans le notebook `TP2_MNIST_convol.ipynb`.
+Arrêter le script. Dans le fichier source `learning.py` modifier la fonction `build_model` pour implémenter un réseau convolutif semblable à celui vu dans le notebook `TP2_MNIST_convol.ipynb`.
 
-Une fois fait, relancer le script et faire défiler jusqu'à la partie 2.5 (vous pouvez modifier `SHOW_SAMPLES` pour ne pas afficher toutes les fenêtres...) :
+Relancer alors le script et faire défiler jusqu'à la partie 2.5 (vous pouvez modifier `SHOW_SAMPLES` pour ne pas afficher toutes les fenêtres...) :
 
 * vérifier les informations des couches sur le résumé du modèle...
 
@@ -178,15 +178,15 @@ pour trouver les contours des cubes :
 
 ![212_contours.png](img/212_contours.png)
 
-et en extraire des images compatibles MNIST :
+et extraire des images compatibles MNIST :
 
 ![212_contours.png](img/2.png)
 
-qui seront envoyées au réseau de neurone pour classification en '1 ou '2'...
+qui seront envoyées au réseau de neurone pour classification en '1' ou '2'...
 
 ### 3.1 Présentation des données
 
-Ouvrir le fichier `src/detection.py` et lancer le script. Une image exemple issue de la caméra du robot devrait vous être présentée :
+Ouvrir le fichier `src/detection.py` et lancer le script. Une des images exemple issue de la caméra du robot devrait vous être présentée :
 
 * Observer les valeurs de pixels ? Quelles sont les valeurs de pixels blancs et noirs ?
 
@@ -202,16 +202,13 @@ Dans le code, observer la fonction `binarize` :
 
 * À quoi sert la fonction `threshold_otsu` ? (voir au besoin la documentation  `scikit-image`).
 
-* Ajouter une ligne pour afficher la valeur de `thresh` à chaque appel de la fonction. Cette valeur est elle la même pour toutes les images ?
-
 En commentant successivement les lignes les utilisant, observer l'impact de chacune des fonctions suivantes :
 
-* À quoi sert la fonction `closing` ?
-* À quoi sert la fonction `clear_border` ?
-* À quoi sert la fonction `convex_hull_object` ?
-* Conclure en résumant l'enchaÎnement des opérations effectuées dans la fonction `binarize`.
+* fonction `closing`
+* fonction `clear_border`
+* fonction `convex_hull_object`
 
-* pourquoi faut-il éviter d'avoir des cubes qui touchent les bords de l'image ?
+Pourquoi faut-il éviter d'avoir des cubes qui touchent les bords de l'image ?
 
 ### 3.3 Recherche des contours des cubes
 
@@ -222,7 +219,6 @@ Observer la fonction `get_box_contours`:
 * À quoi sert la fonction `label` ?
 * À quoi sert le paramètre `area` ?
 * À quoi sert la fonction numpy `argsort` utilisée à la fin pour le ré-arragement des contours ? Pourquoi cette opération est elle importante ?
-* Conclure en résumant l'enchaînement des opérations effectuées dans la fonction `get_box_contours`.
 
 ### 3.4 Extraction des vignettes
 
@@ -236,7 +232,7 @@ Observer la fonction `get_sprites`:
 
 Pendant la phase d'apprentissage, nous avons étudié la préparation qui était faite des images.
 
-Les vignettes que nous allons présenter au réseau de neurones doivent aussi être traitées pour avoir les mêmes caractéristiques que les images d'entrainement MNIST :
+Les vignettes présentées au réseau de neurones doivent aussi être traitées pour avoir les mêmes caractéristiques que les images d'entrainement MNIST :
 
 * Remplir la fonction `preprocess_sprites` pour effectuer ce traitement...
 
@@ -248,7 +244,7 @@ Vous pouvez maintenant ouvrir le fichier `main.py` pour tester l'intégration de
 
 Il est maintenant temps d'intégrer les deux parties du pipeline pour l'utilisation finale. Ouvrez le fichier `main.py` à la racine du projet.
 
-Pour que les deux parties du pipeline s'adaptent correctement, vous avez complété la fonction `preprocess_sprites` qui permet de mettre les vignettes renvoyées par la partie détection dans un format compatible avec celui des images MNIST.
+Pour que les deux parties du pipeline s'adaptent correctement, vous avez complété la fonction `preprocess_sprites` pour mettre les vignettes renvoyées par la partie détection dans un format compatible avec celui des images MNIST.
 
 Exécuter maintenant le programme `main.py` : donner le nom d'un dossier qui contient les fichiers des poids du réseau entraîné et vous devriez commencer à obtenir la reconnaissance des chiffres '1' et '2' dans les images fournies.
 
@@ -256,12 +252,12 @@ Il faudra certainement refaire plusieurs fois l'entraînement du réseau en joua
 
 * changer la valeur de la graine `SEED` peut conduire à un état initial des poids du réseau qui donne un entraînement meilleur ou pas...
 
-* augmenter/diminuer `BATCH_SIZE` peut aussi améliorer ou pas les performances du réseau entraîné...
+* augmenter/diminuer `BATCH_SIZE` peut modifier les performances du réseau entraîné...
 
 * augmenter/diminuer le paramètre `patience` du callback `EarlyStopping`...
 
-* enfin, tous les paramètres qui définissent les couches de convotution et de __spoling__ du réseau convolurif sont autant de possibilités d'améliorer ou pas les performances du réseau entraîné....
+* enfin, tous les paramètres qui définissent les couches de convolution et de __spooling__ du réseau convolutif sont autant de possibilités d'améliorer ou pas les performances du réseau entraîné....
 
-À vous de jouer pour obtenir un réseau entraîné discriminant le mieux possible les chiffres '1' et '2' des images extraites des captures de la caméra duu robot...
+À vous de jouer pour obtenir un réseau entraîné discriminant le mieux possible les chiffres '1' et '2' dans les images fournies par la caméra duu robot...
 
-Pour confirmer la qualité de votre réseau entraîné vous pouvez enregistrer vos propres fichiers PNG avec les images faites avec la caméra du robot en utilisant le service ROS `/get_image`. Aidez-vous des idications du paragraphe __2.4. Récupérer les images de la caméra en Python__ dans la section [Manipulation/Poppy Ergo Jr](https://learn.ros4.pro/fr/manipulation/ergo-jr/) en complétant avec l'instruction `cv2.imwrite(image, file_name)` pour l'écriture du fichier PNG. Vous pouvez déposer vos fichiers dans le répertoire `data/ergo_cubes/perso` et modifier en conséquence la variable `im_dir` du fichier `main.py`. Lancez le programme et observez la performance de votre algorithme sur les données de votre propre environnement.
+Pour confirmer la qualité de votre réseau entraîné vous pouvez enregistrer vos propres fichiers PNG avec les images faites avec la caméra du robot en utilisant le service ROS `/get_image`. Aidez-vous des idications du paragraphe __2.4. Récupérer les images de la caméra en Python__ dans la section [Manipulation/Poppy Ergo Jr](https://learn.ros4.pro/fr/manipulation/ergo-jr/) en complétant avec l'instruction `cv2.imwrite(image, file_name)` pour l'écriture du fichier PNG. Vous pouvez déposer vos fichiers dans le répertoire `data/ergo_cubes/perso` et modifier en conséquence la variable `img_dir` du fichier `main.py`. Lancez le programme et observez les performances de votre réseau opérant sur vos propres images.
