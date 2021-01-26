@@ -154,7 +154,7 @@ chmod +x ros4pro_custom/src/manipulate.py    # On rend ce noeud exécutable pour
 
 💻🐍 Bien que vous devriez avoir compris comment créer un noeud ROS en Python dans les tutoriels d'introduction, voici un rappel de noeud ROS minimal qui boucle toutes les secondes en Python :
 ```python
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 
