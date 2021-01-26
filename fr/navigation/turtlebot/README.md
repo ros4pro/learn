@@ -5,7 +5,7 @@
 * Lycée et +
 * Notions de Python et commandes dans un terminal
 * Aisance en géométrie 2D
-* Le [TP d'introduction](../introduction)
+* Le [TP d'introduction](../../introduction)
 * Ce TP est compatible avec la simulation si vous n'avez pas de Turtlebot
 
 ## Diapositives
@@ -26,12 +26,33 @@
 [![Vidéo d'assemblage](https://img.youtube.com/vi/rvm-m2ogrLA/0.jpg)](https://www.youtube.com/watch?v=rvm-m2ogrLA)
 
 ### 2. Bringup du TB3 (avec un robot réel)
-📀 Si ce n'est déjà fait, récupérez le metapackage `turtlebot3` sur votre poste de travail et compilez :
+📀 Si ce n'est déjà fait, installez les dépendances, récupérez le metapackage `turtlebot3` sur votre poste de travail et compilez :
+```bash
+sudo apt install ros-noetic-joy ros-noetic-teleop-twist-joy \
+  ros-noetic-teleop-twist-keyboard ros-noetic-laser-proc \
+  ros-noetic-rgbd-launch ros-noetic-rosserial-arduino \
+  ros-noetic-rosserial-python ros-noetic-rosserial-client \
+  ros-noetic-rosserial-msgs ros-noetic-amcl ros-noetic-map-server \
+  ros-noetic-move-base ros-noetic-urdf ros-noetic-xacro \
+  ros-noetic-compressed-image-transport ros-noetic-rqt-image-view \
+  ros-noetic-gmapping ros-noetic-navigation ros-noetic-interactive-markers
+```
 ```bash
 cd ~/catkin_ws/src
+```
+```bash
 git clone https://github.com/ros4pro/turtlebot3/
+```
+```bash
 git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+```
+```bash
+git  clone https://github.com/ros4pro/ros4pro.git
+```
+```bash
 cd ~/catkin_ws && catkin_make
+```
+```bash
 source ~/.bashrc
 ```
 
@@ -95,6 +116,7 @@ Plusieurs environnements de simulation sont disponibles :
 🐍 Les commandes pour naviguer jusqu'à chaque point de passage seront des instructions dans un fichier Python. Le noeud `navigation_scenario.py` auquel vous pourrez accéder en tapant `roscd ros4pro/src/nodes` est une ébauche de script Python pour y parvenir.
 
 🐍 Complétez ce fichier Python afin d'exécuter le scenario et ainsi effectuer la patrouille. Pour exécuter le scénario lancez la navigation en arrière plan comme indiqué dans **2.5 Navigation** puis lancez la commande `rosrun ros4pro navigate_waypoints.py`.
+
 
 ## 🧳 Challenge additionnel : Carry my luggage
 Challenge inspiré de l'épreuve "Carry my luggage" de la RoboCup @Home.
