@@ -188,7 +188,7 @@ Le `MoveGroupCommander` est le commandeur de robot de MoveIt, il suffit de lui i
 ```python
 from moveit_commander.move_group import MoveGroupCommander
 commander = MoveGroupCommander("arm_and_finger")
-commander.set_pose_target([0.00, 0.079, 0.220] + [0.871, -0.014, 0.079, 0.484])
+commander.set_pose_target([0, 0, 0.25] + [1, 0, 0, 0])
 commander.go()
 ```
 
