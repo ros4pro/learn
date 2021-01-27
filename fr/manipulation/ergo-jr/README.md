@@ -259,7 +259,7 @@ source ~/.bashrc
 🐍 Testez ce code pour vérifier que vous pouvez récupérer l'image en Python via le service ROS `/get_image` fourni par le contrôleur.
 
 ```python
-import cv2
+import cv2, rospy
 from poppy_controllers.srv import GetImage
 from cv_bridge import CvBridge
 
