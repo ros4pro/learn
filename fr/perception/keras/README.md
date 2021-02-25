@@ -213,7 +213,7 @@ Il est maintenant temps d'intégrer les deux parties du pipeline pour l'utilisat
 
 Pour que les deux parties du pipeline s'adaptent correctement, vous avez complété la fonction `preprocess_sprites` pour mettre les vignettes renvoyées par la partie détection dans un format compatible avec celui des images MNIST.
 
-Exécuter maintenant le programme `main.py` : donner le nom d'un dossier qui contient les fichiers des poids du réseau entraîné et vous devriez commencer à obtenir la reconnaissance des chiffres '1' et '2' dans les images fournies.
+Exécuter maintenant le programme `main.py` : donner le chemin d'un dossier qui contient les fichiers du réseau entraîné et vous devriez commencer à obtenir la reconnaissance des chiffres '1' et '2' dans les images fournies.
 
 Il faudra certainement refaire plusieurs fois l'entraînement du réseau en jouant sur plusieurs paramètres avant d'obtenir un réseau entraîné qui fonctionne correctement :
 
