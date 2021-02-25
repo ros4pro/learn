@@ -37,7 +37,7 @@
 </div>
 
 #### 📚 Auteurs
-Jessica Colombel ([Inria](http://inria.fr/)), Rémi Fabre ([CATIE](https://robotics.catie.fr/)), Jean-Baptiste Horel ([CATIE](https://robotics.catie.fr/)), Yoan Mollard ([Bordeaux INP](https://robot-enseirb-matmeca.fr/)), Alexandre Péré ([Inria](https://flowers.inria.fr)), Steve N'Guyen ([LaBRI](https://www.labri.fr/)) .
+Jessica Colombel ([Inria](http://inria.fr/)), Jean-Luc Charles ([ENSAM](https://artsetmetiers.fr/)), Rémi Fabre ([CATIE](https://robotics.catie.fr/)), Jean-Baptiste Horel ([CATIE](https://robotics.catie.fr/)), Yoan Mollard ([Bordeaux INP](https://robot-enseirb-matmeca.fr/)), Alexandre Péré ([Inria](https://flowers.inria.fr)), Steve N'Guyen ([LaBRI](https://www.labri.fr/)) .
 
 #### 💬 Besoin d'aide ?
 Posez votre question sur le [forum francophone des utilisateurs de ROS](https://discourse.ros.org/c/local/france/48).
