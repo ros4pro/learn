@@ -31,7 +31,7 @@ Les actions de la cellule robotique sont les suivantes :
 6. Le Turtlebot lit ce paramètre et se rend au conteneur 1 ou 2
 7. Il effectue une rotation de 360° pour faire chuter le cube dans la zone de tri à l'aide du mât
 
-![Diagramme de séqunce](../../img/UML_integration.png)
+![Diagramme de séquence](img/UML_integration.png)
 
 ## 2. Comment faire ?
 Selon votre avancement, vous n'êtes pas obligés de suivre l'ordre de travail ci-dessous. Il y a peut-être un sujet plutôt qu'un autre où vous êtes le plus en retard que vous devez rattraper.

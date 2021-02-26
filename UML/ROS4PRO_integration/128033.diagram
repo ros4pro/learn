@@ -1,0 +1,305 @@
+format 223
+
+classinstancecanvas 128033 classinstance_ref 128033 // 
+ color mediumyellow  xyz 459.948 83.6982 2005 life_line_z 2010
+end
+classinstancecanvas 128161 classinstance_ref 128161 // 
+  xyz 702.655 23.6748 2005 life_line_z 2000
+end
+classinstancecanvas 129057 classinstance_ref 128289 // 
+ color green  xyz 990.987 124.997 2005 life_line_z 2005
+end
+classinstancecanvas 129569 classinstance_ref 128417 // 
+  xyz 1135.14 40.3582 2005 life_line_z 2005
+end
+fragment 130465 "loop : for label in labels"
+  color green form "ccc" xyzwh 785.97 380.015 2000 278 506
+end
+fragment 131361 "loop : for cube in cubes"
+  color mediumyellow xyzwh 467.043 375.648 2000 267 508
+end
+classinstancecanvas 134433 classinstance_ref 128545 // 
+ color lightblue  xyz 116.738 133.772 2005 life_line_z 2005
+end
+note 135073 "wait for \"targetLabel\"  != -1"
+  color lightblue  xyzwh 74.8617 383.509 2016 201 35
+fragment 135329 "alt"
+  color blue form "tagetLabel == 1" xyzwh 80.9364 577.79 2000 256 128
+  separator 5180
+end
+textcanvas 135841 "targetLabel == 1"
+  xyzwh 81.18 605.14 2010 101 17
+textcanvas 135969 "targetLabel == 2"
+  xyzwh 78.84 651.02 2010 101 17
+fragment 136737 "loop"
+  color lightblue xyzwh 33.546 223.497 0 388 662
+end
+durationcanvas 128289 classinstance_ref 128033 // :manipulate
+  xyzwh 494 137 2015 11 27
+end
+durationcanvas 128417 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 137 2010 11 27
+end
+durationcanvas 128673 classinstance_ref 128033 // :manipulate
+  xyzwh 494 211.28 2015 11 32
+end
+durationcanvas 128801 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 209.16 2010 11 28
+end
+durationcanvas 129185 classinstance_ref 129057 // :nn
+  color white
+  xyzwh 1010 177.68 2010 11 59
+end
+durationcanvas 129313 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 175.86 2010 11 25
+end
+durationcanvas 129697 classinstance_ref 129057 // :nn
+  xyzwh 1009 291.02 2010 11 38
+end
+durationcanvas 129825 classinstance_ref 129569 // :ROS_Proxy
+  xyzwh 1169 291.02 2010 11 38
+end
+durationcanvas 130209 classinstance_ref 129057 // :nn
+  xyzwh 1010 342.12 2010 11 25
+end
+durationcanvas 130593 classinstance_ref 129057 // :nn
+  xyzwh 1009 455.26 2015 11 25
+end
+durationcanvas 130721 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 455.26 2010 11 25
+end
+durationcanvas 130977 classinstance_ref 128033 // :manipulate
+  xyzwh 494 416.66 2015 11 63
+end
+durationcanvas 131105 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 420.96 2010 11 25
+end
+durationcanvas 131745 classinstance_ref 128033 // :manipulate
+  xyzwh 494 553.7 2020 11 25
+end
+durationcanvas 131873 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 750 556.04 2010 11 26
+end
+durationcanvas 132129 classinstance_ref 128033 // :manipulate
+  xyzwh 494 591.34 2020 11 26
+end
+durationcanvas 132257 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 591.12 2010 11 27
+end
+durationcanvas 132513 classinstance_ref 128033 // :manipulate
+  xyzwh 494 496.24 2020 11 25
+end
+durationcanvas 132769 classinstance_ref 128033 // :manipulate
+  xyzwh 494 631.88 2020 11 231
+end
+durationcanvas 132897 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 750 632.14 2010 11 64
+end
+durationcanvas 133153 classinstance_ref 129057 // :nn
+  xyzwh 1009 493.9 2015 11 25
+end
+durationcanvas 133281 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 493.9 2010 11 25
+end
+durationcanvas 133537 classinstance_ref 129057 // :nn
+  xyzwh 1010 528.88 2015 11 337
+end
+durationcanvas 133665 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 750 526.64 2010 11 25
+end
+durationcanvas 133921 classinstance_ref 129057 // :nn
+  xyzwh 1010 251.14 2015 11 26
+end
+durationcanvas 134049 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 250.14 2010 11 27
+end
+durationcanvas 134561 classinstance_ref 134433 // :simple_navigation_goals
+  xyzwh 191 291.74 2010 11 285
+end
+durationcanvas 134689 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 294.68 2010 11 25
+end
+durationcanvas 135585 classinstance_ref 134433 // :simple_navigation_goals
+  xyzwh 191 609.38 2010 11 25
+end
+durationcanvas 136097 classinstance_ref 134433 // :simple_navigation_goals
+  xyzwh 192 660.16 2015 11 26
+end
+durationcanvas 136353 classinstance_ref 134433 // :simple_navigation_goals
+  xyzwh 192 734.66 2015 11 27
+end
+durationcanvas 136481 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 733.88 2010 11 27
+end
+durationcanvas 136865 classinstance_ref 134433 // :simple_navigation_goals
+  xyzwh 191 782.32 2015 11 25
+end
+durationcanvas 137121 classinstance_ref 134433 // :simple_navigation_goals
+  xyzwh 191 824.86 2015 11 27
+end
+durationcanvas 137249 classinstance_ref 128161 // :Poppy_Ergo_Jr
+  xyzwh 749 823.32 2010 11 44
+end
+msg 128545 synchronous
+  from durationcanvas_ref 128289
+  to durationcanvas_ref 128417
+  yz 139 2010 explicitmsg "init"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 563 124
+msg 128929 synchronous
+  from durationcanvas_ref 128673
+  to durationcanvas_ref 128801
+  yz 212 2010 explicitmsg "set_param('takeImage\", True)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 518 198
+msg 129441 synchronous
+  from durationcanvas_ref 129185
+  to durationcanvas_ref 129313
+  yz 182 2015 explicitmsg "get_param('takeImage')"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 789 169
+msg 129953 synchronous
+  from durationcanvas_ref 129697
+  to durationcanvas_ref 129825
+  yz 292 2015 explicitmsg "get_image"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 1054 279
+msg 130081 return
+  from durationcanvas_ref 129825
+  to durationcanvas_ref 129697
+  yz 317 2020 explicitmsg "img"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 1121 303
+reflexivemsg 130337 synchronous
+  to durationcanvas_ref 130209
+  yz 342 2015 explicitmsg "process(img)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 1051 340
+msg 130849 synchronous
+  from durationcanvas_ref 130593
+  to durationcanvas_ref 130721
+  yz 462 2020 explicitmsg "set_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "'label\", label"
+  label_xy 861 447
+msg 131233 synchronous
+  from durationcanvas_ref 130977
+  to durationcanvas_ref 131105
+  yz 421 2020 explicitmsg "get_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"label\""
+  label_xy 572 407
+msg 131489 return
+  from durationcanvas_ref 130721
+  to durationcanvas_ref 130977
+  yz 467 2020 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+msg 131617 return
+  from durationcanvas_ref 128801
+  to durationcanvas_ref 129185
+  yz 223 2015 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+msg 132001 synchronous
+  from durationcanvas_ref 131745
+  to durationcanvas_ref 131873
+  yz 559 2025 explicitmsg "set_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"targetLabel\", label"
+  label_xy 513 544
+msg 132385 synchronous
+  from durationcanvas_ref 132129
+  to durationcanvas_ref 132257
+  yz 596 2025 explicitmsg "set_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"label\", -1"
+  label_xy 513 583
+reflexivemsg 132641 synchronous
+  to durationcanvas_ref 132513
+  yz 496 2025 explicitmsg "place_cube_on_turtlebot(cube)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 530 490
+msg 133025 synchronous
+  from durationcanvas_ref 132769
+  to durationcanvas_ref 132897
+  yz 633 2025 explicitmsg "get_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"robotReady\""
+  label_xy 515 619
+msg 133409 synchronous
+  from durationcanvas_ref 133153
+  to durationcanvas_ref 133281
+  yz 500 2020 explicitmsg "set_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"RobotReady\", False"
+  label_xy 818 484
+msg 133793 synchronous
+  from durationcanvas_ref 133537
+  to durationcanvas_ref 133665
+  yz 530 2020 explicitmsg "get_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"Robotready\""
+  label_xy 856 516
+msg 134177 synchronous
+  from durationcanvas_ref 133921
+  to durationcanvas_ref 134049
+  yz 260 2020 explicitmsg "set_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "'takeImage\", False"
+  label_xy 780 244
+msg 134817 synchronous
+  from durationcanvas_ref 134561
+  to durationcanvas_ref 134689
+  yz 295 2015 explicitmsg "get_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"targetLabel\""
+  label_xy 206 280
+msg 134945 return
+  from durationcanvas_ref 131873
+  to durationcanvas_ref 134561
+  yz 563 3005 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+reflexivemsg 135713 synchronous
+  to durationcanvas_ref 135585
+  yz 609 2015 explicitmsg "goto()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"point1\""
+  label_xy 227 605
+reflexivemsg 136225 synchronous
+  to durationcanvas_ref 136097
+  yz 660 2020 explicitmsg "goto()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"point2\""
+  label_xy 225 656
+msg 136609 synchronous
+  from durationcanvas_ref 136353
+  to durationcanvas_ref 136481
+  yz 736 2020 explicitmsg "set_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"targetLabel\", -1"
+  label_xy 211 722
+reflexivemsg 136993 synchronous
+  to durationcanvas_ref 136865
+  yz 782 2020 explicitmsg "goto()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"home\""
+  label_xy 225 775
+msg 137377 synchronous
+  from durationcanvas_ref 137121
+  to durationcanvas_ref 137249
+  yz 827 2020 explicitmsg "set_param()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  args "\"robotReady\", True"
+  label_xy 210 814
+msg 137505 return
+  from durationcanvas_ref 137249
+  to durationcanvas_ref 132769
+  yz 849 2025 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+msg 137633 return
+  from durationcanvas_ref 137249
+  to durationcanvas_ref 133537
+  yz 848 2020 unspecifiedmsg
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+line 135201 -_-_
+  from ref 134561 z 2017 to ref 135073
+end

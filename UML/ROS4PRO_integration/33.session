@@ -1,0 +1,12 @@
+window_sizes 1207 876 239 962 768 56
+cleanlooks_style
+diagrams
+  active  sequencediagram_ref 128033 // seq
+    1264 927 78 A3-Landscape 0 0
+end
+show_stereotypes
+selected class_ref 128161 // ROS_Param
+open
+  classview_ref 128033 // Class View
+end
+end
