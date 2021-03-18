@@ -93,10 +93,13 @@ source ~/.bashrc    # Pour charger votre .bashrc et donc le nouveau master
 * Appelez ce service pour activer et désactiver le mode compliant et essayez de faire bouger votre robot à la main à chaque fois. Que déduisez-vous de la signification du **mode compliant** ? *Conseil :* aidez-vous de l'autocomplétion avec la touche <TAB>
 
 ##### 2.1.2.c. Tracer la courbe des positions des moteurs en temps réel
-Mettez votre robot en mode compliant. Démarrez `rqt_plot` et ajoutez au graphe 6 courbes à tracer correspondant aux 6 positions angulaires, par exemple `/joint_states/poisition[0]` pour le premier moteur. Ajoutez également les vitesse (`velocity`). Bougez les moteurs à la main et vérifiez que `rqt_plot` actualise la courbe en temps réel.
+Mettez votre robot en mode compliant. Démarrez `rqt_plot` et ajoutez au graphe 6 courbes à tracer correspondant aux 6 positions angulaires, par exemple `/joint_states/position[0]` pour le premier moteur. Ajoutez également les vitesse (`velocity`). Bougez les moteurs à la main et vérifiez que `rqt_plot` actualise la courbe en temps réel.
 
 ### 2.2. Cinématique, et planification avec MoveIt dans RViz
-#### 2.2.1. Démarrer avec MoveIt
+#### 2.2.1. Démarrer avec MoveIt en simulation
+Si et seulement si vous ne pouvez pas utiliser de robot réel foncitonnel, une partie du TP suivant peut être réalisée en simulation : dans ce cas, changez votre `ROS_MASTER_URI` pour `localhost` (`nano ~/.bashrc`, faites la modification, enregistrez, puis `source ~/.bashrc`) puis, dans les commandes du TP, passez l'argument `fake_execution` à `true`.
+
+#### 2.2.1. Démarrer avec MoveIt avec un robot réel
 💻📀 Installez MoveIt puis clonez le package ROS **Poppy Ergo Jr MoveIt Configuration**, il contient le code nécessaire pour que ce robot fonctionne avec MoveIt :
 ```bash
 sudo apt install ros-noetic-moveit
@@ -107,12 +110,9 @@ git clone https://github.com/poppy-project/poppy_ergo_jr_moveit_config.git
 ```
 roslaunch poppy_ergo_jr_moveit_config demo.launch fake_execution:=false gripper:=true
 ```
-Rviz doit démarrer avec un Poppy Ergo Jr en visu correspondant à l'état de votre robot en temps réel.
-
+Rviz doit démarrer avec un Poppy Ergo Jr en visu correspondant à l'état de votre robot en temps réel. ⚠️ **Vérifiez impérativement** à ce stade que la posture de votre robot dans RViz correspond à la posture courante du robot réel : les angles des moteurs, et l'emplacement des rivets doivent **correspondre en tout point** à votre robot réel. Il est fréquent que les robots soient incorrectement assemblés, dans ce cas fermez MoveIt et reprenez pas-à-pas [le guide d'assemblage](https://docs.poppy-project.org/fr/assembly-guides/ergo-jr/) pour corriger avant de continuer.
 
 ⚠️ Les encodeurs ne sont capables de mesurer que des angles entre -170° et +170° : ne réalisez pas de trajectoires qui font sortir les moteurs de cet intervalle angulaire car cela causera des "téléportations" intempestives.
-
-**Note :** si vous devez passer en simulation à ce moment suite à un défaut matériel, pensez à changer votre `ROS_MASTER_URI` pour `localhost` puis mettre simplement `fake_execution` à `true`.
 
 ![MoveIt avec Poppy Ergo Jr](https://raw.githubusercontent.com/poppy-project/poppy_ergo_jr_moveit_config/36ffb295cf115a080b81aa6475ae512e88c9957a/doc/img/MoveIt.gif)
 
