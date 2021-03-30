@@ -26,14 +26,16 @@ Les modèles sont décrit par un fichier xml selon la norme [URDF](https://wiki.
 
 ### 3. Un simple cube
 
+Pour la suite du TP, clonez le package [poppy_ergo_jr_gazebo](https://github.com/poppy-project/poppy_ergo_jr_gazebo) dans votre ROS workspace.
+
 Dans `poppy_ergo_jr_gazebo/urdf` on peut voir la définition d'un cube. Pour charger cet URDF dans Gazebo : `rosrun gazebo_ros spawn_model -file cube.urdf -urdf -model test -x 0 -y 0 -z 1`
 
--   Quelles sont les dimensions du cube?
--   Quelle est la masse du cube?
+-   Quelles sont les dimensions du cube ?
+-   Quelle est la masse du cube ?
 -   Expérimentez pour expliquer la différence entre `visual` et `collision` (menu `View/Collisions`)
 -   Observez la position du cube avec `rostopic echo -n 1 /gazebo/model_states`
 -   Modifiez cette position avec `rosservice call /gazebo/set_model_state [TAB]` (Utilisez la complétion du terminal avec [TAB] pour remplir le message)
--   Appliquez une force de 10N selon l'axe x pendant 5s sur le cube en utilisant : `rosservice call /gazebo/apply_body_wrench` (Quel est le "body<sub>name</sub>" à utiliser?)
+-   Appliquez une force de 10N selon l'axe x pendant 5s sur le cube en utilisant : `rosservice call /gazebo/apply_body_wrench` (Quel est le "body<sub>name</sub>" à utiliser ?)
 
 Pour supprimer le modèle : `rosservice call gazebo/delete_model "model_name: 'test'"`
 
